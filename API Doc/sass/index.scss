@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
+@import "./abstracts/v";
+@import "./abstracts/m";
+
+// geral
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.container {
+    &-flex {
+        width: 87.5%;
+        max-width: 1200px;
+        display: flex;
+        @include desktop {
+            width: 90%;
+        }
+    }
+    &-grid {
+        width: 87.5%;
+        max-width: 1200px;
+        display: grid;
+        @include desktop {
+            width: 90%;
+        }
+    }
+}
+
+a {
+    text-decoration: none;
+    color: $black;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+// main
+main {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    padding-block-start: 2em;
+    > div {
+        @include desktop {
+            display: block !important;
+        }
+    }
+}
+// aside/menu
+aside {
+    width: 100%;
+    display: grid;
+    place-self: center;
+    padding-block: 1em;
+    border-bottom: 1px solid #ccc;
+    @include desktop {
+        position: fixed;
+        width: 200px;
+        border: none;
+    }
+    ul {
+        margin-block-start: 1em;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding-inline-start: 1.25em;
+        ul {
+            margin-block-start: .5em;
+        }
+    }
+}
+// sections
+section {
+    width: 100%;
+    display: grid;
+    padding-block: 1em;
+    gap: 1em;
+    @include desktop {
+        width: calc(100% - 200px);
+        margin-inline: auto 0;
+        padding-inline-start: 2em;
+        padding-block: 1em;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        border-left: 1px solid #ccc;
+    }
+    .table {
+        width: 100%;
+        overflow-x: auto;
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+            width: max-content;
+            th, td {
+                padding: 6px 12px;
+                border: 1px solid #ccc;
+            }
+        }
+    }
+    pre {
+        width: max-content;
+        display: flex;
+        padding: 1em;
+        background-color: #ebebeb;
+        border-radius: 6px;
+    }
+}
+
+footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-block: 1.5em;
+    a {
+        text-decoration: underline;
+    }
+}
