@@ -18,7 +18,6 @@ const routes = (app) => {
         arquivos,
         clienteArquivos
     )
-    
 }
 
 export default routes

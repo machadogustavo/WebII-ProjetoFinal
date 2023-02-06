@@ -9,7 +9,7 @@ class clienteArquivoController {
         let clienteArquivo = new clienteArquivos(req.body)
         clienteArquivo.save((error) => {
             if (error) {
-             res.status(500).send({message: `${error.message} - Erro ao cadastrar o arquivo-cliente.`})
+             res.status(500).send({message: `${error.message} - Erro ao cadastrar o cliente-arquivo.`})
             }
              else {
              res.status(201).send(clienteArquivo.toJSON())
@@ -17,30 +17,69 @@ class clienteArquivoController {
     })
     }
     // READ - GET
-    static lerclientesArquivos = (req, res) => {
-    clienteArquivos.find()
-    // .populate([{path: 'cliente', select: 'nomeCliente', select: 'emailCliente'},{path: 'arquivo', select: 'nomeArquivo', select: 'tipoArquivo'}, ])
-    .exec((error, clienteArquivo) => {
-        if(error){
+    static lerclienteArquivos = (req, res) => {
+        clienteArquivos.find()
+        .populate([
+            {path: 'cliente'},
+
+            {path: 'arquivo', 
+            select: 'nomeArquivo'},
+        ])
+        .exec((error, clienteArquivo) => {
+            if(error){
             res.status(400).send({message: `${error.message} - Erro ao ler a tabela clienteArquivo`})
-        }
-        else{
+            }
+            else{
             res.status(200).json(clienteArquivo)
-        }
+            }
     })
     }
 
     // READ² - GET
+    static lerclienteArquivosId = (req, res) => {
+        let idclientesArquivo = req.params.id
+        clienteArquivos.findById(idclientesArquivo)
+        .populate([
+            {path: 'cliente'},
 
-
+            {path: 'arquivo', 
+            select: 'nomeArquivo'},
+        ])
+        .exec((error, clienteArquivo) => {
+            if(error) {
+                res.status(400).send({message: `${error.message} - Erro ao buscar cliente-arquivo.`})
+            }
+            else{
+                res.status(200).json(clienteArquivo)
+            }
+        })
+    }
     // UPDATE - PUT
-
+    static editarclienteArquivos = (req, res) => {
+        let idclientesArquivo = req.params.id
+        clienteArquivos.findByIdAndUpdate(idclientesArquivo, {$set: req.body}, (error => {
+            if(error){
+                res.status(500).send({message: `${error.message} - Erro ao editar o cliente-arquivo`})
+            }
+            else{
+                res.status(200).send({message: "Coleção cliente-arquivo editado com sucesso."})
+            }
+        }))
+    }
     // DELETE - DELETE
+    static deletarclienteArquivos = (req, res) =>{
+        let idclientesArquivo = req.params.id
+        clienteArquivos.findByIdAndDelete(idclientesArquivo, (error) => {
 
-
+            if(!error) {
+                res.status(200).send({message: 'Registro removido com sucesso.'})
+            }
+            else{
+                res.status(500).send({message: `${error.message} - Erro ao deletar.`})
+            }
+        })
+    }
 
 }
-
-
 
 export default clienteArquivoController
