@@ -1,0 +1,31 @@
+.btn-primary {
+    display: flex;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+.btn-color-blue {
+    background-color: $button;
+    p {
+        padding: 15px 35.5px;
+        color: #fff;
+        text-decoration: none;
+    }
+}
+
+.btn-secundary {
+    display: flex;
+    background-color: transparent;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+.btn-border-blue {
+    border: 2px solid $button;
+    border-radius: 8px;
+    p {
+        padding: 14px 2rem;
+        color: $button;
+        text-decoration: none;
+    }
+}

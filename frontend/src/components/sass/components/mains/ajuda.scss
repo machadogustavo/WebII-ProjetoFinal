@@ -1,0 +1,36 @@
+#ajuda {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    padding-block-end: 5rem;
+    > div {
+        flex-direction: column;
+        gap: 1rem;
+        h2 {
+            @include txt1-3;
+            @include mobile {
+                @include txt1-2;
+            }
+            @include tablet {
+                @include txt1;
+            }
+        }
+        p {
+            @include p-regular;
+        }
+        img {
+            @include tablet {
+                max-width: 50%;
+                align-self: center;
+            }
+        }
+        > div {
+            display: flex;
+            padding-block-end: 75px;
+            a p {
+                padding-inline: 20px;
+                text-align: center;
+            }
+        }
+    }
+}

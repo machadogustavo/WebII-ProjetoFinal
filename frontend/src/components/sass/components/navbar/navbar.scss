@@ -1,0 +1,71 @@
+body nav {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    div {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        @include desktop {
+            justify-content: flex-start;
+        }
+        > div {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: max-content;
+            &:after {
+                content: '';
+                display: flex;
+                width: 2px;
+                height: 25px;
+                max-height: 25px;
+                margin-inline: .5rem;
+                background-color: $black;
+                @include mobile {
+                    margin-inline: 1rem;
+                }
+            }
+        }
+        > div:first-of-type > a {
+            @include p-medium;
+            @include mobile {
+                @include txt2-medium;
+            }
+        }
+        .open-menu {
+            @include desktop {
+                display: none;
+            }
+        }
+        ul {
+            display: none;
+            @include desktop {
+                display: flex;
+                height: 100%;
+                list-style: none;
+                align-items: center;
+                gap: 1.5rem;
+                li a {
+                    @include txt2-regular;
+                }
+            }
+        }
+    }
+    > .btn-secundary {
+        display: none;
+        @include desktop {
+            min-width: max-content;
+            display: flex;
+        }
+        > p {
+            @include p-regular;
+            @include desktop {
+                @include txt2-regular;
+            }
+        }
+    }
+}

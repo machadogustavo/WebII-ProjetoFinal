@@ -1,0 +1,38 @@
+#root {
+    position: relative;
+    min-height: 100vh;
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background-color: $higlight;
+        display: grid;
+        place-items: center;
+        padding-block: 1.5rem;
+        > div {
+            justify-content: flex-start;
+            align-items: center;
+            > .div {
+                &::before {
+                    content: '';
+                    display: flex;
+                    width: 2px;
+                    height: 25px;
+                    max-height: 25px;
+                    margin-inline: 1rem;
+                    border-radius: 1px;
+                    background-color: $white;
+                }
+            }
+            p {
+                @include p-medium;
+                color: $white;
+                a {
+                    @include p-medium;
+                    text-decoration: underline;
+                    color: $white;
+                }
+            }
+        }
+    }
+}

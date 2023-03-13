@@ -1,0 +1,62 @@
+#not-found {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    padding-block-end: 5rem;
+    > div {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        section {
+            width: 100%;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            padding-block-end: 5rem;
+            @include tablet {
+                margin-block-start: 3rem;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            @include desktop {
+                gap: 5rem;
+            }
+            > div {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                @include tablet {
+                    max-width: 50%;
+                }
+                h1 {
+                    @include txt1-3;
+                    @include tablet {
+                        @include txt1-2;
+                    }
+                }
+                h2 {
+                    @include p-regular;
+                    @include tablet {
+                        @include txt2-regular;
+                    }
+                }
+                > div {
+                    display: flex;
+                    margin-block-start: .5rem;
+                    @include tablet {
+                        margin-block-start: 1.5rem;
+                    }
+                    a > p {
+                        padding: 15px 27px;
+                    }
+                }
+            }
+            > img {
+                margin-block-start: 1rem;
+                @include tablet {
+                    width: 50%;
+                }
+            }
+        }
+    }
+}

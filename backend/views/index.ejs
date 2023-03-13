@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teste Rotas</title>
+    <script type="module" src="/script.js"></script>
+  </head>
+  <body>
+    <h1>Rota Form de Upload Arquivo</h1>
+
+    <form method="post" enctype="multipart/form-data" action="/form">
+      <input type="file" name="arquivo" />
+      <br>
+      <br>
+
+      <label>Nome Cliente</label>
+      <input required type="text" name="nomeCliente" />
+      <br/>
+      <label>Telefone Cliente</label>
+      <input type="number" name="telefoneCliente" />
+      <br />
+      <label>Email Cliente</label>
+      <input required type="text" name="emailCliente" />
+      <br>
+      <br>
+      <input type="submit" value="Enviar" />
+
+
+
+    </form>
+
+    <br />
+
+    <!-- <h1>Form de Cadastro Cliente</h1>
+
+    <form method="post" action="/clientes">
+      <label>Nome Cliente</label>
+      <input required type="text" name="nomeCliente" />
+      <br />
+      <label>Telefone Cliente</label>
+      <input type="number" name="telefoneCliente" />
+      <br />
+      <label>Email Cliente</label>
+      <input required type="text" name="emailCliente" />
+
+      <input type="submit" value="Enviar" />
+    </form> -->
+
+    <br />
+
+    <h1>Lista de Clientes</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Telefone</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody id="clientes"></tbody>
+    </table>
+
+    <br />
+
+    <h1>Lista de Arquivos</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Arquivo</th>
+          <th>Tipo Arquivo</th>
+        </tr>
+      </thead>
+      <tbody id="arquivos"></tbody>
+    </table>
+  </body>
+</html>

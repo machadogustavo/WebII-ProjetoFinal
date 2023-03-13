@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import "../abstracts/v";
+@import "../abstracts/m";
+
+// geral
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+}
+
+body {
+    background-color: $bg-color;
+}
+html {
+    scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4 {
+    color: $headline;
+}
+p, a {
+    @include p-regular;
+    color: $paragraph;
+}
+
+img {
+    max-width: 100%;
+}
+
+.container {
+    &-flex {
+        width: 87.5%;
+        max-width: 1200px;
+        display: flex;
+        @include tablet {
+            width: 90%;
+        }
+    }
+    &-grid {
+        width: 87.5%;
+        max-width: 1200px;
+        display: grid;
+        @include tablet {
+            width: 90%;
+        }
+    }
+}
+
+a {
+    text-decoration: none;
+    color: $paragraph;
+    &:hover {
+        text-decoration: underline;
+    }
+}

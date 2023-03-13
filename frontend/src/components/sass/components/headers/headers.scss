@@ -1,0 +1,10 @@
+header {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    position: relative;
+    > div {
+        gap: 1rem;
+        padding-block: 40px;
+    }
+}
