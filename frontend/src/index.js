@@ -2,8 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import App from './App'
-import Index from './pages/Index'
 import Home from './pages/Home'
+import Index from './pages/Index'
+import Admin from './pages/Admin'
 import Ajuda from './pages/Ajuda'
 import NotFound from './pages/NotFound'
 
@@ -18,6 +19,8 @@ const router = createBrowserRouter([
         path: '/home', element: <Home />
       }, {
         path: '/ajuda', element: <Ajuda />
+      }, {
+        path: '/admin', element: <Admin />
       }
     ]
   }

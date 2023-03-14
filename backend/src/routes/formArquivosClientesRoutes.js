@@ -1,9 +1,12 @@
 import express from "express";
+import cors from "cors";
 import formArquivosClientesController from "../controllers/formArquivosClientesController.js";
 import multerUpload from "../config/multer.js";
-const router = express.Router()
+const router = express.Router() 
 
 // Rotas
+
+router.use(cors())
 
 router  
     .get("/form", formArquivosClientesController.lerArquivoClienteAll)
