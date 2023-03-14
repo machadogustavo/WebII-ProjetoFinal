@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { ImageConfig } from '../../config/ImageConfig'
 
 
-
 // form validation
 function useFormik({initialValues}) {
   const [values, setValues] = useState(initialValues)
@@ -56,9 +55,9 @@ const IndexMain = props => {
   // formik
   const formik = useFormik({
     initialValues: {
-      clienteNome: 'morandi',
-      clienteTelefone: '123456',
-      clienteEmail: 'email@email.com'
+      nomeCliente: 'morandi',
+      telefoneCliente: '123456',
+      emailCliente: 'email@email.com'
     }
   })
 
@@ -70,19 +69,19 @@ const IndexMain = props => {
           <h1>Envie seus arquivos!</h1>
           <p>Não se preocupe com o tipo de arquivo que você deseja imprimir, suportamos diversos formatos, como PDF, DOC, XLS, JPG, PNG e muito mais.</p>
         </div>
-        <form action="/form" id='form' method='POST'>
+        <form method="post" enctype="multipart/form-data" action="/form">
           <h2>Dados de contato :)</h2>
           <label>
             <p>Nome *</p>
-            <input type="text" name='clienteNome' placeholder='Seu nome' onChange={formik.handleChange} value={formik.values.clientName} />
+            <input type="text" name='nomeCliente' placeholder='Seu nome' onChange={formik.handleChange} value={formik.values.clientName} />
           </label>
           <label>
             <p>Email *</p>
-            <input type="email" name='clienteEmail' placeholder='email@email.com' onChange={formik.handleChange} value={formik.values.clientEmail} />
+            <input type="email" name='emailCliente' placeholder='email@email.com' onChange={formik.handleChange} value={formik.values.clientEmail} />
           </label>
           <label>
             <p>Telefone *</p>
-            <input type="text" name='clienteTelefone' placeholder='(XX) X XXXX-XXXX' onChange={formik.handleChange} value={formik.values.clientTel} />
+            <input type="text" name='telefoneCliente' placeholder='(XX) X XXXX-XXXX' onChange={formik.handleChange} value={formik.values.clientTel} />
           </label>
           <div ref={wrapperRef} onDragEnter={onDragEnter} onDragLeave={onDragLeave} onDrop={onDrop}>
             <i className="fa-sharp fa-solid fa-file-arrow-up"></i>
