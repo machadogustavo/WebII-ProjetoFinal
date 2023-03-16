@@ -3,8 +3,11 @@ import clientesController from "../controllers/clientesController.js";
 
 const router = express.Router()
 
-//Rotas
-router
+import cors from "cors";
+
+// Rotas
+
+router.use(cors())
     .get("/clientes",clientesController.lerClientes)
     .get("/clientes/nome/:nomeCliente",clientesController.letClienteNome)
     .get("/clientes/:id",clientesController.lerClienteId)

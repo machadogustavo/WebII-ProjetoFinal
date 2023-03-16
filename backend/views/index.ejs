@@ -11,7 +11,11 @@
     <h1>Rota Form de Upload Arquivo</h1>
 
     <form method="post" enctype="multipart/form-data" action="/form">
-      <input type="file" name="arquivo" />
+      <input type="file" name="files" multiple/>
+      <br>
+      <br>
+
+
       <br>
       <br>
 
@@ -31,51 +35,20 @@
 
     </form>
 
-    <br />
+    <br>
 
-    <!-- <h1>Form de Cadastro Cliente</h1>
+    <br>
 
-    <form method="post" action="/clientes">
-      <label>Nome Cliente</label>
-      <input required type="text" name="nomeCliente" />
-      <br />
-      <label>Telefone Cliente</label>
-      <input type="number" name="telefoneCliente" />
-      <br />
-      <label>Email Cliente</label>
-      <input required type="text" name="emailCliente" />
+    <Br>
 
-      <input type="submit" value="Enviar" />
-    </form> -->
+    <form method="delete" enctype="multipart/form-data" action="/deleteall"></form>
+
+
+    <input type="submit" value="Deletar Registros" />
+
+    <form/>
 
     <br />
 
-    <h1>Lista de Clientes</h1>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Telefone</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody id="clientes"></tbody>
-    </table>
 
     <br />
-
-    <h1>Lista de Arquivos</h1>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Arquivo</th>
-          <th>Tipo Arquivo</th>
-        </tr>
-      </thead>
-      <tbody id="arquivos"></tbody>
-    </table>
-  </body>
-</html>

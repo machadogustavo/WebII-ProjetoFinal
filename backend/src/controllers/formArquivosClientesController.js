@@ -9,17 +9,20 @@ class formArquivosClientesController {
 
   static criarArquivoCliente = async (req, res) => {
     try {
-      // const nomeCliente = req.body.nomeCliente
 
-      // // Verificar se existe um cliente com o mesmo nome.
-      // const clienteExistente = await clientes.findOne({ nomeCliente })
+      const nomeCliente = req.body.nomeCliente
 
-      // if(clienteExistente) {
-      //   return res.status(400).send({
-      //     message: `Existe um cliente com o nome ${nomeCliente}, tente outro.`
-      //   })
-      // }
+      // Verificar se existe um cliente com o mesmo nome.
+      const clienteExistente = await clientes.findOne({ nomeCliente })
 
+      if(clienteExistente) {
+        
+
+
+
+      }
+
+      // console.log("aqui =>", req.files);
       const Cliente = new clientes({
         nomeCliente: req.body.nomeCliente,
         telefoneCliente: req.body.telefoneCliente,
@@ -29,29 +32,50 @@ class formArquivosClientesController {
       // Salva o cliente no banco de dados
       await Cliente.save();
 
-      const Arquivo = new arquivos({
-        nomeArquivo: req.file.originalname + Date.now(),
-        arquivo: req.file.buffer,
-        tipoArquivo: req.file.mimetype,
-        cliente: Cliente._id,
-      });
+      let msgRetorno = {
+        clientes: [],
+        arquivos: []
+      };
 
-      // Salva o arquivo no banco de dados
-      await Arquivo.save();
+      let arrayArquivos = []
+      
+      for (let i = 0; i < req.files.length; i++) {
+        let file = req.files[i];
+      
+        let Arquivo = new arquivos({
+          nomeArquivo: file.originalname + Date.now(),
+          arquivo: file.buffer,
+          tipoArquivo: file.mimetype,
+          tamanhoArquivo: file.size,
+          cliente: Cliente._id,
+        });
+      
+        await Arquivo.save();
+      
+        let clienteArquivo = new clienteArquivosMD({
+          cliente: Cliente._id,
+          arquivo: Arquivo._id,
+        });
+        
+        // Salva a relação entre cliente e arquivo no banco de dados
+        await clienteArquivo.save();
+        arrayArquivos.push(file.originalname)
+        msgRetorno.clientes.push({
+          nomeCliente: req.body.nomeCliente
+        });
+        msgRetorno.arquivos.push({
+          nomeArquivo: file.originalname
+        });
+      }
+      console.log('MSG RETORNO =>',msgRetorno);
 
-      const clienteArquivo = new clienteArquivosMD({
-        cliente: Cliente._id,
-        arquivo: Arquivo._id,
-      });
-
-      // Salva a relação entre cliente e arquivo no banco de dados
-      await clienteArquivo.save();
-
+  
       return res.status(201).send({
         message: `Arquivo e Cliente cadastrados com sucesso!`,
-        nomeCliente: Cliente.nomeCliente,
-        nomeArquivo: Arquivo.nomeArquivo,
+        nomeCliente: nomeCliente,
+        nomeArquivo: arrayArquivos
       });
+
     } catch (error) {
       // Tratamento de Erro
       return res.status(500).send({
@@ -66,10 +90,10 @@ class formArquivosClientesController {
         .find()
         .populate([
           { path: "cliente" },
-          { path: "arquivo", select: "nomeArquivo" },
+          { path: "arquivo" },
         ])
         .exec();
-  
+
       res.status(200).json(clienteArquivo);
     } catch (error) {
       res.status(400).send({
@@ -138,11 +162,12 @@ class formArquivosClientesController {
     }
   };
 
-
   static deletarArquivosImpressos = async (req, res) => {
     try {
       // Busca todos os registros de clienteArquivos com impressoStatus = true
-      const registrosImpressos = await clienteArquivosMD.find({ impressoStatus: true });
+      const registrosImpressos = await clienteArquivosMD.find({
+        impressoStatus: true,
+      });
 
       // Para cada registro encontrado, exclui o arquivo do banco de dados
       for (const registro of registrosImpressos) {
@@ -161,7 +186,7 @@ class formArquivosClientesController {
         message: `${error.message} - Erro ao excluir arquivos impressos.`,
       });
     }
-};
+  };
 
   static deletarAll = async (req, res) => {
     try {

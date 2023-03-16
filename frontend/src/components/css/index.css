@@ -666,3 +666,16 @@ body nav > .btn-secundary > p {
 }
 
 /*# sourceMappingURL=index.css.map */
+
+
+table,tr,td {
+  border: 1px solid;
+  width: 50%;
+  border-collapse: collapse;
+  padding: 50px;
+}
+
+#tableArquivoCliente {
+  display: flex;
+  text-align: center;
+}
