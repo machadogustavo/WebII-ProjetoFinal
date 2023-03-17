@@ -9,73 +9,73 @@ class formArquivosClientesController {
 
   static criarArquivoCliente = async (req, res) => {
     try {
-
-      const nomeCliente = req.body.nomeCliente
+      const nomeCliente = req.body.nomeCliente.toLowerCase();
 
       // Verificar se existe um cliente com o mesmo nome.
-      const clienteExistente = await clientes.findOne({ nomeCliente })
+      const clienteExistente = await clientes.findOne({ nomeCliente });
 
-      if(clienteExistente) {
-        
+      let Cliente;
+      let ClienteId;
 
+      if (clienteExistente) {
+        // Se já existir um cliente com o mesmo nome, utilizar o mesmo ID.
+        ClienteId = clienteExistente._id;
+      } else {
+        // Se não existir, criar um novo cliente.
+        Cliente = new clientes({
+          nomeCliente: nomeCliente,
+          telefoneCliente: req.body.telefoneCliente,
+          emailCliente: req.body.emailCliente,
+        });
 
+        ClienteId = Cliente._id;
 
+        // Salva o cliente no banco de dados
+        await Cliente.save();
       }
-
-      // console.log("aqui =>", req.files);
-      const Cliente = new clientes({
-        nomeCliente: req.body.nomeCliente,
-        telefoneCliente: req.body.telefoneCliente,
-        emailCliente: req.body.emailCliente,
-      });
-
-      // Salva o cliente no banco de dados
-      await Cliente.save();
 
       let msgRetorno = {
         clientes: [],
-        arquivos: []
+        arquivos: [],
       };
 
-      let arrayArquivos = []
-      
+      let arrayArquivos = [];
+
       for (let i = 0; i < req.files.length; i++) {
         let file = req.files[i];
-      
+
         let Arquivo = new arquivos({
           nomeArquivo: file.originalname + Date.now(),
           arquivo: file.buffer,
           tipoArquivo: file.mimetype,
           tamanhoArquivo: file.size,
-          cliente: Cliente._id,
+          cliente: ClienteId,
         });
-      
+
         await Arquivo.save();
-      
+        // Salva a relação entre cliente e arquivo no banco de dados
         let clienteArquivo = new clienteArquivosMD({
-          cliente: Cliente._id,
+          cliente: ClienteId,
           arquivo: Arquivo._id,
         });
-        
-        // Salva a relação entre cliente e arquivo no banco de dados
+
         await clienteArquivo.save();
-        arrayArquivos.push(file.originalname)
+
+        arrayArquivos.push(file.originalname);
         msgRetorno.clientes.push({
-          nomeCliente: req.body.nomeCliente
+          nomeCliente: req.body.nomeCliente,
         });
         msgRetorno.arquivos.push({
-          nomeArquivo: file.originalname
+          nomeArquivo: file.originalname,
         });
       }
-      console.log('MSG RETORNO =>',msgRetorno);
+      console.log("MSG RETORNO =>", msgRetorno);
 
-  
       return res.status(201).send({
         message: `Arquivo e Cliente cadastrados com sucesso!`,
-        nomeCliente: nomeCliente,
-        nomeArquivo: arrayArquivos
+        nomeCliente: req.body.nomeCliente,
+        nomeArquivo: arrayArquivos,
       });
-
     } catch (error) {
       // Tratamento de Erro
       return res.status(500).send({
@@ -88,10 +88,7 @@ class formArquivosClientesController {
     try {
       const clienteArquivo = await clienteArquivosMD
         .find()
-        .populate([
-          { path: "cliente" },
-          { path: "arquivo" },
-        ])
+        .populate([{ path: "cliente" }, { path: "arquivo" }])
         .exec();
 
       res.status(200).json(clienteArquivo);

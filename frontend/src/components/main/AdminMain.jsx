@@ -2,15 +2,9 @@ import React from "react";
 import { useState } from "react";
 
 const AdminMain = () => {
-  fetch("http://localhost:3000/form").then((response) => {
-    response.json().then((dados) => {
-      dados.map((cliente) => {
-        console.log(cliente);
-      });
-    });
-  });
 
   const [data, setData] = useState([]);
+  const [clientes, setClientes] = useState([]);
 
   fetch("http://localhost:3000/form")
     .then((response) => response.json())
@@ -19,8 +13,40 @@ const AdminMain = () => {
       console.error(error);
     });
 
+    fetch("http://localhost:3000/clientes")
+    .then((response) => response.json())
+    .then((clientes) => setClientes(clientes))
+    .catch((error) => {
+      console.error(error);
+    });
+
   return (
+
     <div id="tableArquivoCliente">
+
+    <header id="tableClientes">
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Nome Cliente</th>
+          <th>Telefone Cliente</th>
+          <th>Email Cliente</th>
+        </tr>
+      </thead>
+      <tbody>
+        {clientes.map((cliente) => (
+          <tr key={cliente._id}>
+            <td>{cliente.nomeCliente}</td>
+            <td>{cliente.telefoneCliente}</td>
+            <td>{cliente.emailCliente}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    
+    </header>
+
       <table>
         <thead>
           <tr>
@@ -28,9 +54,8 @@ const AdminMain = () => {
             <th>Telefone</th>
             <th>E-mail</th>
             <th>Nome Arquivo</th>
-            {/* <th>Arquivo</th> */}
             <th>Tamanho</th>
-            {/* <th>Tipo Arquivo</th> */}
+            <th>Tipo Arquivo</th>
             <th>Impresso?</th>
           </tr>
         </thead>
@@ -41,7 +66,7 @@ const AdminMain = () => {
               <td>{item.cliente.telefoneCliente}</td>
               <td>{item.cliente.emailCliente}</td>
               <td>{item.arquivo.nomeArquivo}</td>
-              {/* <td>{item.arquivo.tipoArquivo}</td> */}
+              <td>{item.arquivo.tipoArquivo}</td>
               <td>
                 {(item.arquivo.tamanhoArquivo / (1024 * 1024)).toFixed(2) +
                   " MB"}
