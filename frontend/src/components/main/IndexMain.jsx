@@ -77,7 +77,7 @@ const IndexMain = (props) => {
         <form
           method="post"
           enctype="multipart/form-data"
-          action="http://localhost:3000/form"
+          action="http://localhost:3001/form"
           id="form"
         >
           <h2>Dados de contato :)</h2>
@@ -89,28 +89,33 @@ const IndexMain = (props) => {
               placeholder="Seu nome"
               onChange={formik.handleChange}
               value={formik.values.clientName}
+              required
             />
           </label>
-          <label>
-            <p>Email *</p>
-            <input
-              type="email"
-              name="emailCliente"
-              placeholder="email@email.com"
-              onChange={formik.handleChange}
-              value={formik.values.clientEmail}
-            />
-          </label>
-          <label>
-            <p>Telefone *</p>
-            <input
-              type="text"
-              name="telefoneCliente"
-              placeholder="(XX) X XXXX-XXXX"
-              onChange={formik.handleChange}
-              value={formik.values.clientTel}
-            />
-          </label>
+          <div>
+            <label>
+              <p>Email *</p>
+              <input
+                type="email"
+                name="emailCliente"
+                placeholder="email@email.com"
+                onChange={formik.handleChange}
+                value={formik.values.clientEmail}
+                required
+              />
+            </label>
+            <label>
+              <p>Telefone *</p>
+              <input
+                type="text"
+                name="telefoneCliente"
+                placeholder="(00) 0 0000-0000"
+                onChange={formik.handleChange}
+                value={formik.values.clientTel}
+                required
+              />
+            </label>
+          </div>
           <div
             ref={wrapperRef}
             onDragEnter={onDragEnter}
@@ -127,6 +132,7 @@ const IndexMain = (props) => {
               multiple
               onChange={onFileDrop}
               onFileChange={(files) => onFileChange(files)}
+              required
             />
           </div>
           <div>

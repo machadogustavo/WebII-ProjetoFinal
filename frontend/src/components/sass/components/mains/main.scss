@@ -63,6 +63,20 @@
                   }
             }
             > div:first-of-type {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                gap: 1rem;
+                @include tablet {
+                    flex-direction: row;
+                }
+                > label:last-of-type {
+                    @include tablet {
+                        max-width: 250px;
+                    }
+                }
+            }
+            > div:nth-of-type(2) {
                 position: relative;
                 width: 100%;
                 margin-block-start: 2rem;

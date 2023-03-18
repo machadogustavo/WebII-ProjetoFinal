@@ -6,14 +6,14 @@ const AdminMain = () => {
   const [data, setData] = useState([]);
   const [clientes, setClientes] = useState([]);
 
-  fetch("http://localhost:3000/form")
+  fetch("http://localhost:3001/form")
     .then((response) => response.json())
     .then((data) => setData(data))
     .catch((error) => {
       console.error(error);
     });
 
-    fetch("http://localhost:3000/clientes")
+    fetch("http://localhost:3001/clientes")
     .then((response) => response.json())
     .then((clientes) => setClientes(clientes))
     .catch((error) => {
