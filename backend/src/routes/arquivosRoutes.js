@@ -3,8 +3,11 @@ import arquivosController from "../controllers/arquivosController.js";
 import multerUpload from "../config/multer.js";
 const router = express.Router()
 
-//Rotas
-router
+import cors from "cors";
+
+// Rotas
+
+router.use(cors())
     .get("/arquivos",arquivosController.lerArquivos)
     .get("/arquivos/nome/:nomeArquivo",arquivosController.lerArquivoNome)
     .get("/arquivos/:id",arquivosController.lerArquivoId)

@@ -6,9 +6,14 @@ import mongoose from "mongoose"; //Importando Biblioteca Mongoose
 mongoose.set('strictQuery', true)
 
   
-mongoose.connect(`mongodb+srv://admin:bmA6KShRFW86gf9@cluster0.fkajhnv.mongodb.net/WebIIProject`)
+// mongoose.connect(`mongodb+srv://admin:bmA6KShRFW86gf9@cluster0.fkajhnv.mongodb.net/WebIIProject`)
 
+mongoose.connect('mongodb://127.0.0.1/WebIIProject', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 let dbConnect = mongoose.connection
+
 
 export default dbConnect // Exportando módulo de conexão

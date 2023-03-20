@@ -5,11 +5,17 @@ import clientes from "./clientesRoutes.js";
 import arquivos from "./arquivosRoutes.js";
 import clienteArquivos from "./clienteArquivosRoutes.js";
 import formArquivosClientes from "./formArquivosClientesRoutes.js"
+import cors from "cors";
+
+// Rotas
+
 
 const routes = (app) => {
   app.route("/").get((req, res, error) => {
     res.render("index");
   });
+
+  app.use(cors())
 
   app.use(express.json(), clientes, arquivos, clienteArquivos, formArquivosClientes);
 

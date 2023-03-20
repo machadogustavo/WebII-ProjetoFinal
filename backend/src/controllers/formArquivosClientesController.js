@@ -9,21 +9,21 @@ class formArquivosClientesController {
 
   static criarArquivoCliente = async (req, res) => {
     try {
-      const nomeCliente = req.body.nomeCliente.toLowerCase();
+      const emailCliente = req.body.emailCliente.toLowerCase();
 
-      // Verificar se existe um cliente com o mesmo nome.
-      const clienteExistente = await clientes.findOne({ nomeCliente });
+      // Verificar se existe um cliente com o mesmo email.
+      const clienteExistente = await clientes.findOne({ emailCliente });
 
       let Cliente;
       let ClienteId;
 
       if (clienteExistente) {
-        // Se já existir um cliente com o mesmo nome, utilizar o mesmo ID.
+        // Se já existir um cliente com o mesmo email, utilizar o mesmo ID.
         ClienteId = clienteExistente._id;
       } else {
         // Se não existir, criar um novo cliente.
         Cliente = new clientes({
-          nomeCliente: nomeCliente,
+          nomeCliente: req.body.nomeCliente,
           telefoneCliente: req.body.telefoneCliente,
           emailCliente: req.body.emailCliente,
         });
@@ -63,7 +63,7 @@ class formArquivosClientesController {
 
         arrayArquivos.push(file.originalname);
         msgRetorno.clientes.push({
-          nomeCliente: req.body.nomeCliente,
+          emailCliente: req.body.emailCliente,
         });
         msgRetorno.arquivos.push({
           nomeArquivo: file.originalname,
@@ -73,7 +73,7 @@ class formArquivosClientesController {
 
       return res.status(201).send({
         message: `Arquivo e Cliente cadastrados com sucesso!`,
-        nomeCliente: req.body.nomeCliente,
+        emailCliente: req.body.emailCliente,
         nomeArquivo: arrayArquivos,
       });
     } catch (error) {
@@ -99,62 +99,96 @@ class formArquivosClientesController {
     }
   };
 
-  static lerArquivosPorNomeCliente = async (req, res) => {
+  static lerArquivosPorEmailCliente = async (req, res) => {
+    const { email } = req.params;
+
     try {
-      const nomeCliente = req.params.nomeCliente;
+      const arquivos = await clienteArquivosMD
+        .find({ "cliente.emailCliente": email })
+        .populate("arquivo")
+        .exec();
 
-      // Busca o cliente pelo nome
-      const cliente = await clientes.findOne({ nomeCliente });
+      res.status(200).json(arquivos);
+    } catch (error) {
+      res.status(400).send({
+        message: `${error.message} - Erro ao buscar arquivos associados ao email ${email}`,
+      });
+    }
+  };
 
-      if (!cliente) {
-        return res.status(404).send({
-          message: `Não foi encontrado nenhum cliente com o nome "${nomeCliente}".`,
-        });
+  static lerArquivosPorIDCliente = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const arquivos = await clienteArquivosMD
+        .find({ "cliente._id": id })
+        .populate("arquivo")
+        .exec();
+
+      res.status(200).json(arquivos);
+    } catch (error) {
+      res.status(400).send({
+        message: `${error.message} - Erro ao buscar arquivos associados ao cliente com ID ${id}`,
+      });
+    }
+  };
+
+  // UPDATE
+
+  // UPDATE STATUS
+
+  static editarStatusclienteArquivo = async (req, res) => {
+    const id = req.params.arquivoClienteId;
+  try {
+    const clienteArquivo = await clienteArquivosMD.findById(id);
+
+    if (!clienteArquivo) {
+      return res.status(404).send({
+        message: `Cliente arquivo com id ${id} não encontrado`,
+      });
+    }
+
+    const impressoStatus = !clienteArquivo.impressoStatus;
+
+    const updatedClienteArquivo = await clienteArquivosMD.findByIdAndUpdate(
+      id,
+      { impressoStatus },
+      { new: true }
+    );
+
+    return res.status(200).send({
+      message: `Status do arquivo do cliente com id ${id} atualizado com sucesso!`,
+      data: updatedClienteArquivo,
+    });
+  } catch (error) {
+    // Tratamento de Erro
+    return res.status(500).send({
+      message: `${error.message} - Erro ao atualizar status do arquivo do cliente.`,
+    });
+  }
+};
+
+  static deletarArquivoPorId = async (req, res) => {
+    try {
+      const arquivoId = req.params.arquivoId;
+      // Busca o registro de clienteArquivos com o arquivo a ser excluído
+      const registro = await clienteArquivosMD.findOne({ arquivo: arquivoId });
+
+      // Exclui o arquivo do banco de dados
+      await arquivos.findByIdAndDelete(arquivoId);
+
+      // Se o arquivo tiver associação com algum cliente, exclui o registro de clienteArquivos correspondente
+      if (registro) {
+        await clienteArquivosMD.findByIdAndDelete(registro._id);
       }
 
-      // Faz uma junção entre as coleções clientes, arquivos e clienteArquivos
-      const result = await clienteArquivosMD.aggregate([
-        {
-          $lookup: {
-            from: "clientes",
-            localField: "cliente",
-            foreignField: "_id",
-            as: "cliente",
-          },
-        },
-        {
-          $unwind: "$cliente",
-        },
-        {
-          $lookup: {
-            from: "arquivos",
-            localField: "arquivo",
-            foreignField: "_id",
-            as: "arquivo",
-          },
-        },
-        {
-          $unwind: "$arquivo",
-        },
-        {
-          $match: {
-            "cliente.nomeCliente": nomeCliente,
-          },
-        },
-        {
-          $project: {
-            "cliente.nomeCliente": 1,
-            "arquivo.nomeArquivo": 1,
-            "arquivo.tipoArquivo": 1,
-          },
-        },
-      ]);
-
-      return res.status(200).send(result);
+      return res.status(200).send({
+        message: `O arquivo com id ${arquivoId} e todas as suas associações foram excluídos com sucesso!`,
+      });
     } catch (error) {
-      // Tratamento de erro
+      // Tratamento de Erro
       return res.status(500).send({
-        message: `${error.message} - Erro ao buscar os arquivos do cliente.`,
+        message: `${error.message} - Erro ao excluir o arquivo e suas associações.`,
       });
     }
   };
