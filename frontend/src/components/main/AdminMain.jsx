@@ -48,8 +48,8 @@ const AdminMain = () => {
           <div key={cliente._id}>
             <header>
               <h2>{cliente.emailCliente}</h2>
-              <h6>{cliente.nomeCliente}</h6>
-              <h6>{cliente.telefoneCliente}</h6>
+              <h3>{cliente.nomeCliente}</h3>
+              <h3>{cliente.telefoneCliente}</h3>
             </header>
             {arquivos
               .filter((arquivo) => arquivo.cliente === cliente._id)
@@ -67,24 +67,11 @@ const AdminMain = () => {
                       {arquivo.impressoStatus ? "Impresso" : "Não Impresso"}
                     </p>
                   </div>
-                  <i className="fa-solid fa-trash-can">
-                    <button
-                      onClick={() => deletarArquivoPorId(arquivo.arquivo._id)}
-                    >
-                      Deletar
-                    </button>
-                  </i>
-                  <i className="fa-solid fa-trash-can">
-                    <button onClick={() => renderArquivo(arquivo._id)}>
-                      {/* {<iframe src={data} width="100%" height={600}/>} */}
-                      Download Arquivo / Imprimir / Visualizar
-                    </button>
-                  </i>
-                  <i className="fa-solid fa-trash-can">
-                    <button onClick={() => ImpressoStatus(arquivo._id)}>
-                      Mudar Status
-                    </button>
-                  </i>
+                  <div>
+                    <i class="fa-solid fa-check-to-slot" onClick={() => ImpressoStatus(arquivo._id)}></i>
+                    <i class="fa-solid fa-print" onClick={() => renderArquivo(arquivo._id)}></i>
+                    <i className="fa-solid fa-trash-can" onClick={() => deletarArquivoPorId(arquivo.arquivo._id)}></i>
+                  </div>
                 </div>
               ))}
             {arquivos.filter((arquivo) => arquivo.cliente === cliente._id)
