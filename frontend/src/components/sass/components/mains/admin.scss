@@ -15,9 +15,30 @@
                 background-color: $higlight;
                 padding: 1rem;
                 border-radius: 10px 10px 0 0;
+                align-items: center;
+                > * {
+                    display: flex;
+                    align-items: center;
+                    color: $white;
+                }
+                > *::after {
+                    content: '';
+                    display: flex;
+                    width: 2px;
+                    height: 16px;
+                    background-color: $white;
+                    margin-inline: 8px;
+                }
+                > *:last-child::after {
+                    display: none;
+                }
                 > h2 {
                     font-size: 1.5rem;
-                    color: $white;
+                }
+                > h3 {
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 26px;
                 }
             }
             > .cliente {
@@ -66,15 +87,24 @@
                 padding: 1rem;
                 border: 1px solid $higlight;
                 border-top: none;
-                
                 > div {
                     display: flex;
                     gap: 1rem;
                     align-items: center;
                     > p {
-                        width: 175px;
+                        width: 250px;
                         overflow: hidden;
+                        color: $higlight;
                     }
+                    > i {
+                        color: $higlight;
+                        padding: 7px 8px;
+                        border: 2px solid $higlight;
+                        border-radius: 8px;
+                    }
+                }
+                > div:first-of-type > i {
+                    border: none;
                 }
             }
         }

@@ -63,7 +63,6 @@ const AdminMain = () => {
                         arquivo.arquivo.tamanhoArquivo /
                         (1024 * 1024)
                       ).toFixed(2)} MB`}
-                      <br />
                       {arquivo.impressoStatus ? "Impresso" : "Não Impresso"}
                     </p>
                   </div>
@@ -77,7 +76,9 @@ const AdminMain = () => {
             {arquivos.filter((arquivo) => arquivo.cliente === cliente._id)
               .length === 0 && (
               <div>
-                <p>Carregando arquivos desse cliente.</p>
+                <div>
+                  <p>Carregando arquivos desse cliente.</p>
+                </div>
               </div>
             )}
           </div>
