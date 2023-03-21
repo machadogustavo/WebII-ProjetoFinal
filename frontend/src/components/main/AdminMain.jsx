@@ -46,7 +46,7 @@ const AdminMain = () => {
       <div className="container-flex">
         {clientes.map((cliente) => (
           <div key={cliente._id}>
-            <header>
+            <header id={cliente._id}>
               <h2>{cliente.emailCliente}</h2>
               <h3>{cliente.nomeCliente}</h3>
               <h3>{cliente.telefoneCliente}</h3>
@@ -57,7 +57,7 @@ const AdminMain = () => {
                 <div key={arquivo._id}>
                   <div>
                     <i className="fa-sharp fa-regular fa-folder"></i>
-                    <p id={cliente._id}>
+                    <p>
                       {arquivo.arquivo.nomeArquivo}{" "}
                       {`${(
                         arquivo.arquivo.tamanhoArquivo /
@@ -67,8 +67,8 @@ const AdminMain = () => {
                     </p>
                   </div>
                   <div>
-                    <i class="fa-solid fa-check-to-slot" onClick={() => ImpressoStatus(arquivo._id)}></i>
-                    <i class="fa-solid fa-print" onClick={() => renderArquivo(arquivo._id)}></i>
+                    <i className="fa-solid fa-check-to-slot" onClick={() => ImpressoStatus(arquivo._id)}></i>
+                    <i className="fa-solid fa-print" onClick={() => renderArquivo(arquivo._id)}></i>
                     <i className="fa-solid fa-trash-can" onClick={() => deletarArquivoPorId(arquivo.arquivo._id)}></i>
                   </div>
                 </div>
@@ -97,11 +97,10 @@ const AdminMain = () => {
             </header>
             {clientes.map((cliente) => (
               <div key={cliente.id} className="cliente">
-                {console.log(cliente._id)}
                   <div>
                     <div>
                       <i class="fa-solid fa-user"></i>
-                      <p>{cliente.nomeCliente}</p>
+                      <a href={'#' + cliente._id}>{cliente.nomeCliente}</a>
                     </div>
                     <p>{cliente.emailCliente}</p>
                     <p>{cliente.telefoneCliente}</p>
