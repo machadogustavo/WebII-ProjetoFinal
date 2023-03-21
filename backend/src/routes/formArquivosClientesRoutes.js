@@ -9,6 +9,7 @@ const router = express.Router()
 
 router
     .get("/form",formArquivosClientesController.lerArquivoClienteAll)
+    .get("/form/clienteArquivo/:arquivoClienteId",formArquivosClientesController.lerArquivoClientePorId)
     .get("/form/email/:emailCliente", formArquivosClientesController.lerArquivosPorEmailCliente )
     .get("/form/id/:idCliente", formArquivosClientesController.lerArquivosPorIDCliente )
     

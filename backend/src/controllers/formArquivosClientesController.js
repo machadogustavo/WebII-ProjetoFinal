@@ -99,6 +99,24 @@ class formArquivosClientesController {
     }
   };
 
+  static lerArquivoClientePorId = async (req, res) => {
+    const clienteArquivoId = req.params.arquivoClienteId;
+    try {
+      const clienteArquivo = await clienteArquivosMD
+        .findById(clienteArquivoId)
+        .populate("arquivo");
+
+        // res.setHeader('Content-Type', clienteArquivo.arquivo.tipoArquivo);
+        // res.setHeader('Content-Disposition', `attachment; filename=${clienteArquivo.arquivo.nomeArquivo}`);
+        // res.send(clienteArquivo.arquivo);
+        res.status(200).json(clienteArquivo.arquivo);
+    } catch (error) {
+      res.status(400).send({
+        message: `${error.message} - Erro ao buscar arquivo associados ao IdCliente`,
+      });
+    }
+  };
+
   static lerArquivosPorEmailCliente = async (req, res) => {
     const { email } = req.params;
 
@@ -139,34 +157,34 @@ class formArquivosClientesController {
 
   static editarStatusclienteArquivo = async (req, res) => {
     const id = req.params.arquivoClienteId;
-  try {
-    const clienteArquivo = await clienteArquivosMD.findById(id);
+    try {
+      const clienteArquivo = await clienteArquivosMD.findById(id);
 
-    if (!clienteArquivo) {
-      return res.status(404).send({
-        message: `Cliente arquivo com id ${id} não encontrado`,
+      if (!clienteArquivo) {
+        return res.status(404).send({
+          message: `Cliente arquivo com id ${id} não encontrado`,
+        });
+      }
+
+      const impressoStatus = !clienteArquivo.impressoStatus;
+
+      const updatedClienteArquivo = await clienteArquivosMD.findByIdAndUpdate(
+        id,
+        { impressoStatus },
+        { new: true }
+      );
+
+      return res.status(200).send({
+        message: `Status do arquivo do cliente com id ${id} atualizado com sucesso!`,
+        data: updatedClienteArquivo,
+      });
+    } catch (error) {
+      // Tratamento de Erro
+      return res.status(500).send({
+        message: `${error.message} - Erro ao atualizar status do arquivo do cliente.`,
       });
     }
-
-    const impressoStatus = !clienteArquivo.impressoStatus;
-
-    const updatedClienteArquivo = await clienteArquivosMD.findByIdAndUpdate(
-      id,
-      { impressoStatus },
-      { new: true }
-    );
-
-    return res.status(200).send({
-      message: `Status do arquivo do cliente com id ${id} atualizado com sucesso!`,
-      data: updatedClienteArquivo,
-    });
-  } catch (error) {
-    // Tratamento de Erro
-    return res.status(500).send({
-      message: `${error.message} - Erro ao atualizar status do arquivo do cliente.`,
-    });
-  }
-};
+  };
 
   static deletarArquivoPorId = async (req, res) => {
     try {
