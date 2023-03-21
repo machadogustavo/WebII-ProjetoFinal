@@ -57,7 +57,7 @@ const AdminMain = () => {
                 <div key={arquivo._id}>
                   <div>
                     <i className="fa-sharp fa-regular fa-folder"></i>
-                    <p>
+                    <p id={cliente._id}>
                       {arquivo.arquivo.nomeArquivo}{" "}
                       {`${(
                         arquivo.arquivo.tamanhoArquivo /
@@ -90,29 +90,39 @@ const AdminMain = () => {
             {arquivos.filter((arquivo) => arquivo.cliente === cliente._id)
               .length === 0 && (
               <div>
-                <p>Sem arquivos desse cliente.</p>
+                <p>Carregando arquivos desse cliente.</p>
               </div>
             )}
           </div>
         ))}
         {clientes.length === 0 && (
-          <main id="admin">
-            <div className="container-flex">
-              <h2>Sem clientes.</h2>
-            </div>
-          </main>
-        )}
-        {clientes.map((cliente) => (
-          <div key={cliente._id}>
-            <h2>{cliente.nomeCliente}</h2>
-            <div>
-              <ul>
-                <li>{cliente.emailCliente}</li>
-                <li>{cliente.telefoneCliente}</li>
-              </ul>
-            </div>
+          <div>
+            <header>
+              <h2>Sem clientes :'(</h2>
+            </header>
           </div>
-        ))}
+        )}
+        {clientes.length !== 0 &&  (
+          <div>
+            <header>
+              <h2>Clientes:</h2>
+            </header>
+            {clientes.map((cliente) => (
+              <div key={cliente.id} className="cliente">
+                {console.log(cliente._id)}
+                  <div>
+                    <div>
+                      <i class="fa-solid fa-user"></i>
+                      <p>{cliente.nomeCliente}</p>
+                    </div>
+                    <p>{cliente.emailCliente}</p>
+                    <p>{cliente.telefoneCliente}</p>
+                </div>
+                <i className="fa-solid fa-trash-can"></i>
+              </div>
+            ))}
+          </div>
+        )}  
       </div>
     </main>
   );

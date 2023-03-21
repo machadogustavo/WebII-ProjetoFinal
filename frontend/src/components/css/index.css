@@ -531,6 +531,47 @@ body nav > .btn-secundary > p {
   font-size: 1.5rem;
   color: #FFFFFE;
 }
+#admin > div > div > .cliente {
+  display: flex;
+}
+#admin > div > div > .cliente > div {
+  gap: 0px;
+}
+#admin > div > div > .cliente > div > *::after {
+  content: "";
+  display: flex;
+  width: 2px;
+  height: 16px;
+  background-color: #6246EA;
+}
+@media screen and (min-width: 321px) {
+  #admin > div > div > .cliente > div > *::after {
+    margin-inline: 1rem;
+  }
+}
+#admin > div > div > .cliente > div > *:last-child::after {
+  display: none;
+}
+#admin > div > div > .cliente > div > div {
+  display: flex;
+  align-items: center;
+}
+#admin > div > div > .cliente > div > div > i {
+  color: #6246EA;
+  margin-inline-end: 8px;
+}
+#admin > div > div > .cliente > div p {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  color: #6246EA;
+}
+#admin > div > div > .cliente > i {
+  padding: 7px 8px;
+  border: 2px solid #6246EA;
+  border-radius: 8px;
+  color: #6246EA;
+}
 #admin > div > div > div {
   display: flex;
   justify-content: space-between;

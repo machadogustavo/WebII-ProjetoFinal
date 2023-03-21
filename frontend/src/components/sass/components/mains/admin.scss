@@ -20,6 +20,45 @@
                     color: $white;
                 }
             }
+            > .cliente {
+                display: flex;
+                > div {
+                    gap: 0px;
+                    > *::after {
+                        content: '';
+                        display: flex;
+                        width: 2px;
+                        height: 16px;
+                        background-color: $higlight;
+                        @include mobile {
+                            margin-inline: 1rem;
+                        }
+                    }
+                    > *:last-child::after {
+                        display: none;
+                    }
+                    > div {
+                        display: flex;
+                        align-items: center;
+                        > i {
+                            color: $higlight;
+                            margin-inline-end: 8px;
+                        }
+                    }
+                    p {
+                        display: flex;
+                        align-items: center;
+                        width: max-content;
+                        color: $higlight;
+                    }
+                }
+                > i {
+                    padding: 7px 8px;
+                    border: 2px solid $higlight;
+                    border-radius: 8px;
+                    color: $higlight;
+                }
+            }
             > div {
                 display: flex;
                 justify-content: space-between;
@@ -27,6 +66,7 @@
                 padding: 1rem;
                 border: 1px solid $higlight;
                 border-top: none;
+                
                 > div {
                     display: flex;
                     gap: 1rem;
