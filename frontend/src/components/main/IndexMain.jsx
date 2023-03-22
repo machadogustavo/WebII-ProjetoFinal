@@ -79,6 +79,7 @@ const IndexMain = (props) => {
           enctype="multipart/form-data"
           action="http://localhost:3001/form"
           id="form"
+          required
         >
           <h2>Dados de contato :)</h2>
           <label>

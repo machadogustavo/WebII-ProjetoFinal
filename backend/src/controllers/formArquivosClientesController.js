@@ -1,6 +1,7 @@
 import arquivos from "../models/Arquivo.js";
 import clientes from "../models/Cliente.js";
 import clienteArquivosMD from "../models/clienteArquivo.js";
+import path from "path";
 
 class formArquivosClientesController {
   // CRUD
@@ -44,9 +45,12 @@ class formArquivosClientesController {
       for (let i = 0; i < req.files.length; i++) {
         let file = req.files[i];
 
+        let nomeArquivoFormatado = path.parse(file.originalname).name;
+        nomeArquivoFormatado.substring(0, 15).replace(/\s+/g, '');;
         let Arquivo = new arquivos({
-          nomeArquivo: file.originalname + Date.now(),
+          nomeArquivo: nomeArquivoFormatado,
           arquivo: file.buffer,
+          dataArquivo: Date.now(),
           tipoArquivo: file.mimetype,
           tamanhoArquivo: file.size,
           cliente: ClienteId,
@@ -162,7 +166,7 @@ class formArquivosClientesController {
 
       if (!clienteArquivo) {
         return res.status(404).send({
-          message: `Cliente arquivo com id ${id} não encontrado`,
+          message: `Cliente arquivo com id [${id}] não encontrado`,
         });
       }
 
@@ -175,7 +179,7 @@ class formArquivosClientesController {
       );
 
       return res.status(200).send({
-        message: `Status do arquivo do cliente com id ${id} atualizado com sucesso!`,
+        message: `Status do arquivo com id [${id}] atualizado com sucesso!`,
         data: updatedClienteArquivo,
       });
     } catch (error) {
@@ -201,7 +205,7 @@ class formArquivosClientesController {
       }
 
       return res.status(200).send({
-        message: `O arquivo com id ${arquivoId} e todas as suas associações foram excluídos com sucesso!`,
+        message: `O arquivo com id [${arquivoId}] e todas as suas associações foram excluídos com sucesso!`,
       });
     } catch (error) {
       // Tratamento de Erro
@@ -210,6 +214,35 @@ class formArquivosClientesController {
       });
     }
   };
+
+  static deletarClientePorId = async(req, res) => {
+    try {
+      const clienteId = req.params.clienteId;
+  
+      // Busca os registros de clienteArquivos com os arquivos a serem excluídos
+      const registros = await clienteArquivosMD.find({ cliente: clienteId });
+  
+      // Exclui todos os arquivos associados ao cliente
+      const arquivosIds = registros.map(registro => registro.arquivo);
+      await arquivos.deleteMany({ _id: { $in: arquivosIds } });
+  
+      // Exclui todos os registros de clienteArquivos associados ao cliente
+      await clienteArquivosMD.deleteMany({ cliente: clienteId });
+  
+      // Exclui o cliente do banco de dados
+      await clientes.findByIdAndDelete(clienteId);
+  
+      return res.status(200).send({
+        message: `O cliente com o id [${clienteId}] e todas as suas associações foram excluídos com sucesso!`,
+      });
+    } catch (error) {
+      // Tratamento de Erro
+      return res.status(500).send({
+        message: `${error.message} - Erro ao excluir o cliente e suas associações.`,
+      });
+    }
+  };
+
 
   static deletarArquivosImpressos = async (req, res) => {
     try {

@@ -6,6 +6,7 @@ const arquivoSchema = new mongoose.Schema(
     {
         nomeArquivo: {type: String},
         arquivo: {type: Buffer, require: true},
+        dataArquivo: {type: Date},
         tipoArquivo: {type: String},
         tamanhoArquivo: {type: Number, require: true},
         cliente: {type: mongoose.Schema.Types.ObjectId,ref: 'cliente'},
