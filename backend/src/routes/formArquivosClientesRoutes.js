@@ -17,8 +17,14 @@ router
     
     .put("/form/arquivoStatus/:arquivoClienteId",formArquivosClientesController.editarStatusclienteArquivo)
 
+    .delete("/form/deleteCliente/:clienteId",formArquivosClientesController.deletarClientePorId)
 
-    .delete("/form/delete/:arquivoId",formArquivosClientesController.deletarArquivoPorId)
+    .delete("/form/deleteArquivo/:arquivoId",formArquivosClientesController.deletarArquivoPorId)
+
+
+
+
+
     .delete("/form/deleteimpressos",formArquivosClientesController.deletarArquivosImpressos)
     .delete("/deleteall",formArquivosClientesController.deletarAll)
 export default router

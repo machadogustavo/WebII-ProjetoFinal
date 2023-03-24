@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { deletarArquivoPorId } from "../../js/deleteArquivo.js";
 import { ImpressoStatus } from "../../js/impressoStatus.js";
 import { renderArquivo } from "../../js/renderArquivo.js";
+import { deletarClientePorId } from "../../js/deleteCliente.js";
 
 const AdminMain = () => {
   const [clientes, setClientes] = useState([]);
@@ -58,11 +59,13 @@ const AdminMain = () => {
                   <div>
                     <i className="fa-sharp fa-regular fa-folder"></i>
                     <p>
-                      {arquivo.arquivo.nomeArquivo}{" "}
+                      {arquivo.arquivo.nomeArquivo}{" "}<br></br>
                       {`${(
                         arquivo.arquivo.tamanhoArquivo /
                         (1024 * 1024)
-                      ).toFixed(2)} MB`}
+                      ).toFixed(2)} MB`}<br></br>
+                      {'Data Envio: '+new Date(arquivo.arquivo.dataArquivo).toLocaleString()}
+                      <br></br>
                       {arquivo.impressoStatus ? "Impresso" : "Não Impresso"}
                     </p>
                   </div>
@@ -77,7 +80,7 @@ const AdminMain = () => {
               .length === 0 && (
               <div>
                 <div>
-                  <p>Carregando arquivos desse cliente.</p>
+                  <p>O cliente não possui arquivos.</p>
                 </div>
               </div>
             )}
@@ -105,7 +108,7 @@ const AdminMain = () => {
                     <p>{cliente.emailCliente}</p>
                     <p>{cliente.telefoneCliente}</p>
                 </div>
-                <i className="fa-solid fa-trash-can"></i>
+                <i className="fa-solid fa-trash-can" onClick={() => deletarClientePorId(cliente._id)}></i>
               </div>
             ))}
           </div>

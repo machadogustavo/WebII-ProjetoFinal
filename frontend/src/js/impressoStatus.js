@@ -7,8 +7,8 @@ async function ImpressoStatus(arquivoClienteId) {
       }
     );
     const data = await response.json();
-    window.location.reload()
     alert(data.message);
+    window.location.reload()
   } catch (error) {
     console.error(error);
   }
