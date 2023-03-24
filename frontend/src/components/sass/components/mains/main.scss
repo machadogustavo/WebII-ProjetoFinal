@@ -2,7 +2,7 @@
     width: 100%;
     display: grid;
     place-items: center;
-    padding-block-end: 5rem;
+    padding-block-end: 8.5rem;
     > div {
         flex-direction: column;
         align-items: center;
@@ -76,57 +76,27 @@
                     }
                 }
             }
-            > div:nth-of-type(2) {
-                position: relative;
+            > div:last-of-type {
                 width: 100%;
-                margin-block-start: 2rem;
-                padding-block: 4rem;
-                border: 2px dashed $higlight;
                 display: grid;
                 place-items: center;
-                > i {
-                    font-size: 4rem;
-                    color: $higlight;
-                }
-                > h2 {
-                    margin-block-start: 1rem;
-                    max-width: 170px;
-                    @include p-medium  ;
-                    text-align: center;
-                    color: $headline;
-                }
-                > input {
+                > div {
                     width: 100%;
-                    height: 100%;
-                    position: absolute;
-                    opacity: 0.001;
-                }
-            }
-            > div:last-of-type {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 8px;
-                > p {
-                    @include p-medium;
-                    @include mobile {
-                        @include txt2-medium;
+                    margin-block-start: 2rem;
+                    padding-block: 4rem;
+                    display: grid;
+                    place-items: center;
+                    border: 2px dashed $higlight;
+                    > i {
+                        font-size: 4rem;
+                        color: $higlight;
                     }
-                    color: $paragraph;
-                    text-align: center;
-                }
-                > label {
-                    max-width: 270px;
-                    padding-block-end: 75px;
-                    > div {
-                        display: flex;
-                        justify-content: center;
-                        > p {
-                            @include p-medium;
-                            // padding: 3px 45px;
-                            color: #fff;
-                            text-align: center;
-                        }
+                    > h2 {
+                        margin-block-start: 1rem;
+                        max-width: 170px;
+                        @include p-medium  ;
+                        text-align: center;
+                        color: $headline;
                     }
                 }
             }
@@ -134,6 +104,7 @@
         .preview {
             width: 100%;
             max-width: 600px;
+            margin-block-start: 1rem;
             display: flex;
             flex-direction: column;
             border: 1px solid $higlight;
@@ -170,7 +141,7 @@
         .preview ~ div {
             justify-content: center;
             flex-direction: row;
-            padding-block: 2rem 75px;
+            padding-block-start: 2rem;
         }
     }
     .dragover {

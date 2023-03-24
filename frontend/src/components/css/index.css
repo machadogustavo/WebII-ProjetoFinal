@@ -291,7 +291,7 @@ body nav > .btn-secundary > p {
   width: 100%;
   display: grid;
   place-items: center;
-  padding-block-end: 5rem;
+  padding-block-end: 8.5rem;
 }
 #main > div {
   flex-direction: column;
@@ -396,20 +396,24 @@ body nav > .btn-secundary > p {
     max-width: 250px;
   }
 }
-#main > div > form > div:nth-of-type(2) {
-  position: relative;
+#main > div > form > div:last-of-type {
   width: 100%;
-  margin-block-start: 2rem;
-  padding-block: 4rem;
-  border: 2px dashed #6246EA;
   display: grid;
   place-items: center;
 }
-#main > div > form > div:nth-of-type(2) > i {
+#main > div > form > div:last-of-type > div {
+  width: 100%;
+  margin-block-start: 2rem;
+  padding-block: 4rem;
+  display: grid;
+  place-items: center;
+  border: 2px dashed #6246EA;
+}
+#main > div > form > div:last-of-type > div > i {
   font-size: 4rem;
   color: #6246EA;
 }
-#main > div > form > div:nth-of-type(2) > h2 {
+#main > div > form > div:last-of-type > div > h2 {
   margin-block-start: 1rem;
   max-width: 170px;
   font-weight: 500;
@@ -418,50 +422,10 @@ body nav > .btn-secundary > p {
   text-align: center;
   color: #2B2C34;
 }
-#main > div > form > div:nth-of-type(2) > input {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  opacity: 0.001;
-}
-#main > div > form > div:last-of-type {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-#main > div > form > div:last-of-type > p {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 26px;
-  color: #2B2C34;
-  text-align: center;
-}
-@media screen and (min-width: 321px) {
-  #main > div > form > div:last-of-type > p {
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 34px;
-  }
-}
-#main > div > form > div:last-of-type > label {
-  max-width: 270px;
-  padding-block-end: 75px;
-}
-#main > div > form > div:last-of-type > label > div {
-  display: flex;
-  justify-content: center;
-}
-#main > div > form > div:last-of-type > label > div > p {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 26px;
-  color: #fff;
-  text-align: center;
-}
 #main > div .preview {
   width: 100%;
   max-width: 600px;
+  margin-block-start: 1rem;
   display: flex;
   flex-direction: column;
   border: 1px solid #6246EA;
@@ -500,7 +464,7 @@ body nav > .btn-secundary > p {
 #main > div .preview ~ div {
   justify-content: center;
   flex-direction: row;
-  padding-block: 2rem 75px;
+  padding-block-start: 2rem;
 }
 #main .dragover {
   opacity: 0.2;
