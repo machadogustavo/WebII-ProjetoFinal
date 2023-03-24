@@ -18,16 +18,14 @@ const FormMain = () => {
 				}
 			}
     )
-
 		const fileRemove = (file) => {
 			setFiles(currentFiles => currentFiles.filter(f => f !== file))
-		}		
-
+		}
     const Items = files.map(file => (
 			<div className='preview-item' key={file.path}>
 				<div className="preview-item__info">
 					{ImageConfig[file.type.split("/")[1]] || ImageConfig["default"]}
-					<p>{file.path} - {file.size} bytes</p>
+					<p>{file.path} - {(file.size / (1024 * 1024)).toFixed(2)} MB</p>
 				</div>
 				<span
 					className="preview-item__del"
@@ -37,7 +35,7 @@ const FormMain = () => {
 				</span>
 			</div>
     ))
-		
+		// pageview
     return (
       <div className="container-flex">
 				<div>
