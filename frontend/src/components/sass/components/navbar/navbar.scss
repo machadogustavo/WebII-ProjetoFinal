@@ -1,71 +1,124 @@
 body nav {
-    width: 100%;
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-    div {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        @include desktop {
-            justify-content: flex-start;
-        }
-        > div {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            max-width: max-content;
-            &:after {
-                content: '';
-                display: flex;
-                width: 2px;
-                height: 25px;
-                max-height: 25px;
-                margin-inline: .5rem;
-                background-color: $black;
-                @include mobile {
-                    margin-inline: 1rem;
-                }
-            }
-        }
-        > div:first-of-type > a {
-            @include p-medium;
-            @include mobile {
-                @include txt2-medium;
-            }
-        }
-        .open-menu {
-            @include desktop {
-                display: none;
-            }
-        }
-        ul {
-            display: none;
-            @include desktop {
-                display: flex;
-                height: 100%;
-                list-style: none;
-                align-items: center;
-                gap: 1.5rem;
-                li a {
-                    @include txt2-regular;
-                }
-            }
-        }
-    }
-    > .btn-secundary {
-        display: none;
-        @include desktop {
-            min-width: max-content;
-            display: flex;
-        }
-        > p {
-            @include p-regular;
-            @include desktop {
-                @include txt2-regular;
-            }
-        }
-    }
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	div {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		@include desktop {
+			justify-content: flex-start;
+		}
+		> div {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			max-width: max-content;
+			&:after {
+				content: '';
+				display: flex;
+				width: 2px;
+				height: 25px;
+				max-height: 25px;
+				margin-inline: .5rem;
+				background-color: $black;
+				@include mobile {
+					margin-inline: 1rem;
+				}
+			}
+		}
+		> div:first-of-type> a {
+			@include p-medium;
+			@include mobile {
+				@include txt2-medium;
+			}
+		}
+		> svg {
+			@include desktop {
+				display: none;
+			}
+		}
+		ul {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			list-style: none;
+			align-items: flex-end;
+			animation-name: slide-down;
+			animation-duration: 0.3s;
+			animation-fill-mode: forwards;
+			animation-timing-function: ease-out;
+			// height: 0;
+			@include desktop {
+				display: flex;
+				height: 100%;
+				list-style: none;
+				align-items: center;
+				gap: 1.5rem;
+			}
+			li a {
+				@include p-medium;
+
+				@include desktop {
+					@include txt2-regular;
+				}
+			}
+		}
+		ul.menu-active {
+			padding-inline-end: 6px;
+		}
+		ul.menu-hidden {
+			animation-name: slide-up;
+			visibility: hidden;
+			@include desktop {
+				visibility: visible;
+				animation-name: none;
+				width: max-content;
+				display: flex;
+				flex-direction: row;
+				height: min-content;
+				list-style: none;
+				align-items: center;
+				gap: 1.5rem;
+			}
+		}
+	}
+	>.btn-secundary {
+		display: none;
+
+		@include desktop {
+			min-width: max-content;
+			display: flex;
+		}
+		> p {
+			@include p-regular;
+
+			@include desktop {
+				@include txt2-regular;
+			}
+		}
+	}
+}
+
+@keyframes slide-down {
+	from {
+		height: 0;
+		visibility: hidden;
+	}
+	to {
+		height: 104px;
+		visibility: visible;
+	}
+}
+
+@keyframes slide-up {
+  from {
+    height: 104px;
+  }
+  to {
+		height: 0;
+  }
 }

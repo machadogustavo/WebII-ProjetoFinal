@@ -107,7 +107,6 @@ header > div {
 body nav {
   width: 100%;
   display: flex;
-  gap: 1rem;
   justify-content: space-between;
 }
 body nav div {
@@ -115,7 +114,7 @@ body nav div {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  flex-wrap: wrap;
 }
 @media screen and (min-width: 1000px) {
   body nav div {
@@ -123,6 +122,7 @@ body nav div {
   }
 }
 body nav div > div {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -155,12 +155,20 @@ body nav div > div:first-of-type > a {
   }
 }
 @media screen and (min-width: 1000px) {
-  body nav div .open-menu {
+  body nav div > svg {
     display: none;
   }
 }
 body nav div ul {
-  display: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  align-items: flex-end;
+  animation-name: slide-down;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
 }
 @media screen and (min-width: 1000px) {
   body nav div ul {
@@ -170,10 +178,37 @@ body nav div ul {
     align-items: center;
     gap: 1.5rem;
   }
+}
+body nav div ul li a {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+}
+@media screen and (min-width: 1000px) {
   body nav div ul li a {
     font-weight: 400;
     font-size: 24px;
     line-height: 34px;
+  }
+}
+body nav div ul.menu-active {
+  padding-inline-end: 6px;
+}
+body nav div ul.menu-hidden {
+  animation-name: slide-up;
+  visibility: hidden;
+}
+@media screen and (min-width: 1000px) {
+  body nav div ul.menu-hidden {
+    visibility: visible;
+    animation-name: none;
+    width: max-content;
+    display: flex;
+    flex-direction: row;
+    height: min-content;
+    list-style: none;
+    align-items: center;
+    gap: 1.5rem;
   }
 }
 body nav > .btn-secundary {
@@ -198,11 +233,29 @@ body nav > .btn-secundary > p {
   }
 }
 
+@keyframes slide-down {
+  from {
+    height: 0;
+    visibility: hidden;
+  }
+  to {
+    height: 104px;
+    visibility: visible;
+  }
+}
+@keyframes slide-up {
+  from {
+    height: 104px;
+  }
+  to {
+    height: 0;
+  }
+}
 #home {
   width: 100%;
   display: grid;
   place-items: center;
-  padding-block-end: 5rem;
+  padding-block-end: 8.5rem;
 }
 #home > div {
   flex-direction: column;
