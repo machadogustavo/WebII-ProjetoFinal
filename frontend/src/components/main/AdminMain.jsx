@@ -44,63 +44,9 @@ const AdminMain = () => {
   return (
     <main id="admin">
       <div className="container-flex">
-        <button onClick={() => deletarArquivosCheck()}>
-          <h1>
-            Deletar Arquivos Impressos <i className="fa-solid fa-trash-can"></i>
-          </h1>
+        <button className="btn-primary btn-color-blue" onClick={() => deletarArquivosCheck()}>
+          <p>Deletar Todos Arquivos Impressos <i className="fa-solid fa-trash-can"></i></p>
         </button>
-        {/* {clientes.map((cliente) => (
-          <div key={cliente._id}>
-            <header id={cliente._id}>
-              <h2>{cliente.emailCliente}</h2>
-              <h3>{cliente.nomeCliente}</h3>
-              <h3>{cliente.telefoneCliente}</h3>
-            </header>
-            {arquivos
-              .filter((arquivo) => arquivo.cliente === cliente._id)
-              .map((arquivo) => (
-                <div key={arquivo._id}>
-                  <div>
-                    <i className="fa-sharp fa-regular fa-folder"></i>
-                    <p>
-                      {arquivo.arquivo.nomeArquivo} <br></br>
-                      {`${(
-                        arquivo.arquivo.tamanhoArquivo /
-                        (1024 * 1024)
-                      ).toFixed(2)} MB`}
-                      <br></br>
-                      {"Data Envio: " +
-                        new Date(arquivo.arquivo.dataArquivo).toLocaleString()}
-                      <br></br>
-                      {arquivo.impressoStatus ? "Impresso" : "Não Impresso"}
-                    </p>
-                  </div>
-                  <div>
-                    <i
-                      className="fa-solid fa-check-to-slot"
-                      onClick={() => ImpressoStatus(arquivo._id)}
-                    ></i>
-                    <i
-                      className="fa-solid fa-print"
-                      onClick={() => renderArquivo(arquivo._id)}
-                    ></i>
-                    <i
-                      className="fa-solid fa-trash-can"
-                      onClick={() => deletarArquivoPorId(arquivo.arquivo._id)}
-                    ></i>
-                  </div>
-                </div>
-              ))}
-            {arquivos.filter((arquivo) => arquivo.cliente === cliente._id)
-              .length === 0 && (
-              <div>
-                <div>
-                  <p>O cliente não possui arquivos.</p>
-                </div>
-              </div>
-            )}
-          </div>
-        ))} */}
         {clientes.length === 0 && (
           <div>
             <header>
@@ -127,7 +73,7 @@ const AdminMain = () => {
                   <p>
                     {arquivos.filter(
                       (arquivo) => arquivo.cliente === cliente._id
-                    ).length + " Arquivo"}
+                    ).length + " Arquivo(s)"}
                   </p>
                 </div>
                 <i
