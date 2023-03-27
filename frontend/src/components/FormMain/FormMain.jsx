@@ -44,7 +44,7 @@ const FormMain = () => {
 						Não se preocupe com o tipo de arquivo que você deseja imprimir, suportamos diversos formatos, como PDF, DOC, XLS, JPG, PNG e muito mais.
 					</p>
 				</div>
-				<form method="post" enctype="multipart/form-data" action="http://localhost:3001/form" id="form">
+				<form method="post" encType="multipart/form-data" action="http://localhost:3001/form" id="form">
 					<h2>Dados de contato :)</h2>
 					<label>
 						<p>Nome *</p>
@@ -66,14 +66,14 @@ const FormMain = () => {
 							isDragActive={isDragActive}
 							className={isDragActive === true ? "dragover" : ""}
 						>
-							<input {...getInputProps()} />
+							<input {...getInputProps()} name="files"/>
 							<i className="fa-sharp fa-solid fa-file-arrow-up"></i>
 							<h2>Arraste & Solte seus arquivos aqui!</h2>
 						</div>
 					</div>
 				</form>
 				{Items.length > 0 ? (
-					<div className="preview">
+					<div className="preview" name="files">
 						{Items}
 						{console.log(files)}
 					</div>

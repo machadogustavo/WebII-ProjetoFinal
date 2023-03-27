@@ -83,7 +83,7 @@ class formArquivosClientesController {
     } catch (error) {
       // Tratamento de Erro
       return res.status(500).send({
-        message: `${error.message} - Erro ao cadastrar o arquivo e o cliente.`,
+        message: `${error.message} - Erro ao cadastrar o arquivo e o cliente. ${req}`,
       });
     }
   };
@@ -143,10 +143,10 @@ class formArquivosClientesController {
 
     try {
       const arquivos = await clienteArquivosMD
-        .find({ "cliente._id": id })
+        .find({ "cliente._id": id, arquivo: { $exists: true } })
         .populate("arquivo")
         .exec();
-
+  
       res.status(200).json(arquivos);
     } catch (error) {
       res.status(400).send({

@@ -4,12 +4,12 @@ import { deletarArquivoPorId } from "../../js/deleteArquivo.js";
 import { ImpressoStatus } from "../../js/impressoStatus.js";
 import { renderArquivo } from "../../js/renderArquivo.js";
 import { deletarClientePorId } from "../../js/deleteCliente.js";
+import { Link } from "react-router-dom";
 
 const AdminMain = () => {
   const [clientes, setClientes] = useState([]);
   const [arquivos, setArquivos] = useState([]);
   const [lastClientes, setLastClientes] = useState([]);
-  const [arquivoURL, SetArquivoURL] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:3001/clientes")
@@ -45,7 +45,7 @@ const AdminMain = () => {
   return (
     <main id="admin">
       <div className="container-flex">
-        {clientes.map((cliente) => (
+        {/* {clientes.map((cliente) => (
           <div key={cliente._id}>
             <header id={cliente._id}>
               <h2>{cliente.emailCliente}</h2>
@@ -59,20 +59,31 @@ const AdminMain = () => {
                   <div>
                     <i className="fa-sharp fa-regular fa-folder"></i>
                     <p>
-                      {arquivo.arquivo.nomeArquivo}{" "}<br></br>
+                      {arquivo.arquivo.nomeArquivo} <br></br>
                       {`${(
                         arquivo.arquivo.tamanhoArquivo /
                         (1024 * 1024)
-                      ).toFixed(2)} MB`}<br></br>
-                      {'Data Envio: '+new Date(arquivo.arquivo.dataArquivo).toLocaleString()}
+                      ).toFixed(2)} MB`}
+                      <br></br>
+                      {"Data Envio: " +
+                        new Date(arquivo.arquivo.dataArquivo).toLocaleString()}
                       <br></br>
                       {arquivo.impressoStatus ? "Impresso" : "Não Impresso"}
                     </p>
                   </div>
                   <div>
-                    <i className="fa-solid fa-check-to-slot" onClick={() => ImpressoStatus(arquivo._id)}></i>
-                    <i className="fa-solid fa-print" onClick={() => renderArquivo(arquivo._id)}></i>
-                    <i className="fa-solid fa-trash-can" onClick={() => deletarArquivoPorId(arquivo.arquivo._id)}></i>
+                    <i
+                      className="fa-solid fa-check-to-slot"
+                      onClick={() => ImpressoStatus(arquivo._id)}
+                    ></i>
+                    <i
+                      className="fa-solid fa-print"
+                      onClick={() => renderArquivo(arquivo._id)}
+                    ></i>
+                    <i
+                      className="fa-solid fa-trash-can"
+                      onClick={() => deletarArquivoPorId(arquivo.arquivo._id)}
+                    ></i>
                   </div>
                 </div>
               ))}
@@ -85,7 +96,7 @@ const AdminMain = () => {
               </div>
             )}
           </div>
-        ))}
+        ))} */}
         {clientes.length === 0 && (
           <div>
             <header>
@@ -93,26 +104,32 @@ const AdminMain = () => {
             </header>
           </div>
         )}
-        {clientes.length !== 0 &&  (
+        {clientes.length !== 0 && (
           <div>
             <header>
               <h2>Clientes:</h2>
             </header>
             {clientes.map((cliente) => (
               <div key={cliente.id} className="cliente">
+                <div>
                   <div>
-                    <div>
+                    <Link to={`/admin/cliente/${cliente._id}`}>
                       <i class="fa-solid fa-user"></i>
-                      <a href={'#' + cliente._id}>{cliente.nomeCliente}</a>
-                    </div>
-                    <p>{cliente.emailCliente}</p>
-                    <p>{cliente.telefoneCliente}</p>
+                      <a href={"#" + cliente._id}>{cliente.nomeCliente}</a>
+                    </Link>
+                  </div>
+                  <p>{cliente.emailCliente}</p>
+                  <p>{cliente.telefoneCliente}</p>
+                  <p>{arquivos.filter((arquivo) => arquivo.cliente === cliente._id).length + ' Arquivo'}</p>
                 </div>
-                <i className="fa-solid fa-trash-can" onClick={() => deletarClientePorId(cliente._id)}></i>
+                <i
+                  className="fa-solid fa-trash-can"
+                  onClick={() => deletarClientePorId(cliente._id)}
+                ></i>
               </div>
             ))}
           </div>
-        )}  
+        )}
       </div>
     </main>
   );
