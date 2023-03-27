@@ -35,17 +35,22 @@ const ClienteMain = () => {
   });
 
   return (
-    <main id="cliente">
+    <main id="admin">
       <Link to={"/admin"}>Voltar</Link>
 
-      <div className="clienteInfo">
-        <h1>{cliente.nomeCliente}</h1>
-        <h1>{cliente.telefoneCliente}</h1>
-        <h1>{cliente.emailCliente}</h1>
-        <i
-          className="fa-solid fa-trash-can"
-          onClick={() => deletarClientePorId(cliente._id)}
-        ></i>
+      <div className="cliente">
+        <div>
+          <div>
+            <i class="fa-solid fa-user"></i>
+            <h1>{cliente.nomeCliente}</h1>
+            <h2>{cliente.telefoneCliente}</h2>
+            <h2>{cliente.emailCliente}</h2>
+            <i
+              className="fa-solid fa-trash-can"
+              onClick={() => deletarClientePorId(cliente._id)}
+            ></i>
+          </div>
+        </div>
       </div>
 
       <div className="clienteArquivo">

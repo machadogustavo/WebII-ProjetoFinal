@@ -1,10 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { deletarArquivoPorId } from "../../js/deleteArquivo.js";
-import { ImpressoStatus } from "../../js/impressoStatus.js";
-import { renderArquivo } from "../../js/renderArquivo.js";
 import { deletarClientePorId } from "../../js/deleteCliente.js";
 import { Link } from "react-router-dom";
+import { deletarArquivosCheck } from "../../js/deleteArquivosCheck.js";
+
 
 const AdminMain = () => {
   const [clientes, setClientes] = useState([]);
@@ -45,6 +44,11 @@ const AdminMain = () => {
   return (
     <main id="admin">
       <div className="container-flex">
+        <button onClick={() => deletarArquivosCheck()}>
+          <h1>
+            Deletar Arquivos Impressos <i className="fa-solid fa-trash-can"></i>
+          </h1>
+        </button>
         {/* {clientes.map((cliente) => (
           <div key={cliente._id}>
             <header id={cliente._id}>
@@ -120,7 +124,11 @@ const AdminMain = () => {
                   </div>
                   <p>{cliente.emailCliente}</p>
                   <p>{cliente.telefoneCliente}</p>
-                  <p>{arquivos.filter((arquivo) => arquivo.cliente === cliente._id).length + ' Arquivo'}</p>
+                  <p>
+                    {arquivos.filter(
+                      (arquivo) => arquivo.cliente === cliente._id
+                    ).length + " Arquivo"}
+                  </p>
                 </div>
                 <i
                   className="fa-solid fa-trash-can"
