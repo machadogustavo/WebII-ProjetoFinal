@@ -5,6 +5,8 @@ import { ImpressoStatus } from "../../js/impressoStatus.js";
 import { renderArquivo } from "../../js/renderArquivo.js";
 import { deletarClientePorId } from "../../js/deleteCliente.js";
 
+import { ImageConfig } from '../../config/ImageConfig'
+
 const ClienteMain = () => {
   const { idCliente } = useParams();
   console.log("ID CLIENTE ATUAL: ", idCliente);
@@ -17,7 +19,7 @@ const ClienteMain = () => {
       .then((response) => response.json())
       .then((data) => {
         setCliente(data);
-        console.log(cliente);
+        // console.log(cliente);
       })
       .catch((error) => {
         console.error(error);
@@ -35,59 +37,57 @@ const ClienteMain = () => {
   });
 
   return (
-    <main id="admin">
-      <Link to={"/admin"}>Voltar</Link>
-
-      <div className="cliente">
-        <div>
+    <main id="cliente">
+      <div className="container-flex">
+        <header>
           <div>
             <i class="fa-solid fa-user"></i>
-            <h1>{cliente.nomeCliente}</h1>
-            <h2>{cliente.telefoneCliente}</h2>
-            <h2>{cliente.emailCliente}</h2>
-            <i
-              className="fa-solid fa-trash-can"
-              onClick={() => deletarClientePorId(cliente._id)}
-            ></i>
+            <h2>{cliente.nomeCliente}</h2>
           </div>
+          <h3>{cliente.telefoneCliente}</h3>
+          <h3>{cliente.emailCliente}</h3>
+          <i
+            className="fa-solid fa-trash-can"
+            onClick={() => deletarClientePorId(cliente._id)}
+          ></i>
+        </header>
+        <div className="clienteArquivo">
+          {arquivos
+            .filter((arquivo) => arquivo.cliente === cliente._id)
+            .map((arquivo) => (
+              <div key={arquivo._id}>
+                {/* {console.log(arquivo.arquivo.tipoArquivo)} */}
+                <div>
+                  {ImageConfig[arquivo.arquivo.tipoArquivo.split("/")[1]] || ImageConfig["default"]}
+                  <p>
+                    {arquivo.arquivo.nomeArquivo} <br></br>
+                    {`${(arquivo.arquivo.tamanhoArquivo / (1024 * 1024)).toFixed(
+                      2
+                    )} MB`}
+                    <br></br>
+                    {"Data Envio: " +
+                      new Date(arquivo.arquivo.dataArquivo).toLocaleString()}
+                    <br></br>
+                    {arquivo.impressoStatus ? "Impresso" : "Não Impresso"}
+                  </p>
+                </div>
+                <div>
+                  <i
+                    className="fa-solid fa-check-to-slot"
+                    onClick={() => ImpressoStatus(arquivo._id)}
+                  ></i>
+                  <i
+                    className="fa-solid fa-print"
+                    onClick={() => renderArquivo(arquivo._id)}
+                  ></i>
+                  <i
+                    className="fa-solid fa-trash-can"
+                    onClick={() => deletarArquivoPorId(arquivo.arquivo._id)}
+                  ></i>
+                </div>
+              </div>
+            ))}
         </div>
-      </div>
-
-      <div className="clienteArquivo">
-        {arquivos
-          .filter((arquivo) => arquivo.cliente === cliente._id)
-          .map((arquivo) => (
-            <div key={arquivo._id}>
-              <div>
-                <i className="fa-sharp fa-regular fa-folder"></i>
-                <p>
-                  {arquivo.arquivo.nomeArquivo} <br></br>
-                  {`${(arquivo.arquivo.tamanhoArquivo / (1024 * 1024)).toFixed(
-                    2
-                  )} MB`}
-                  <br></br>
-                  {"Data Envio: " +
-                    new Date(arquivo.arquivo.dataArquivo).toLocaleString()}
-                  <br></br>
-                  {arquivo.impressoStatus ? "Impresso" : "Não Impresso"}
-                </p>
-              </div>
-              <div>
-                <i
-                  className="fa-solid fa-check-to-slot"
-                  onClick={() => ImpressoStatus(arquivo._id)}
-                ></i>
-                <i
-                  className="fa-solid fa-print"
-                  onClick={() => renderArquivo(arquivo._id)}
-                ></i>
-                <i
-                  className="fa-solid fa-trash-can"
-                  onClick={() => deletarArquivoPorId(arquivo.arquivo._id)}
-                ></i>
-              </div>
-            </div>
-          ))}
       </div>
     </main>
   );
