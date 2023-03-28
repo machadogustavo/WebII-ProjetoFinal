@@ -1,4 +1,4 @@
-async function deletarArquivosCheck() {
+export async function deletarArquivosCheck() {
     try {
       const response = await fetch(
         `http://localhost:3001/form/deleteimpressos`,
@@ -14,7 +14,4 @@ async function deletarArquivosCheck() {
     }
   }
   
-  module.exports = {
-    deletarArquivosCheck,
-  };
-  
+export default deletarArquivosCheck

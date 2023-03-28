@@ -39,9 +39,9 @@ class arquivosController {
 //  READ² - GET POR NOME
     static lerArquivoNome = (req, res) => {
         let nomeArquivo = req.params.nomeArquivo
-        arquivos.find({nomeArquivo}, (error, arquivos) => {
+        arquivos.find({nomeArquivo}, (error, arquivo) => {
             if(!error) {
-                    res.status(200).json(arquivos)
+                    res.status(200).json(arquivo)
             }
             else {
                 res.status(500).send({message:`${error.message} - Erro ao buscar arquivo por nome`})

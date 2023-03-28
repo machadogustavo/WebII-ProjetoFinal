@@ -1,4 +1,4 @@
-async function deletarClientePorId(clienteId) {
+export async function deletarClientePorId(clienteId) {
     try {
       const response = await fetch(
         `http://localhost:3001/form/deleteCliente/${clienteId}`,
@@ -13,8 +13,6 @@ async function deletarClientePorId(clienteId) {
       console.error(error);
     }
   }
-  
-  module.exports = {
-    deletarClientePorId,
-  };
-  
+
+
+export default deletarClientePorId

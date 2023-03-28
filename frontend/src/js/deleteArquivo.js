@@ -1,4 +1,4 @@
-async function deletarArquivoPorId(arquivoId) {
+export async function deletarArquivoPorId(arquivoId) {
   try {
     const response = await fetch(
       `http://localhost:3001/form/deleteArquivo/${arquivoId}`,
@@ -14,6 +14,4 @@ async function deletarArquivoPorId(arquivoId) {
   }
 }
 
-module.exports = {
-  deletarArquivoPorId,
-};
+export default deletarArquivoPorId

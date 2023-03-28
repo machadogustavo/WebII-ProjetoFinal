@@ -1,19 +1,18 @@
-async function renderArquivo(arquivoClienteId) {
-    try {
-      const response = await fetch(
-        `http://localhost:3001/form/clienteArquivo/${arquivoClienteId}`,
-        {
-          method: "GET",
-        }
-      );
-      const data = await response.json();
+export const renderArquivo = (idArquivo) => {
+  fetch(`http://localhost:3001/arquivos/${idArquivo}`)
+    .then((response) => {
+      console.log(response);
+      return response.blob();
+    })
+    .then((data) => {
       console.log(data);
-    } catch (error) {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "arquivo.pdf");
+      link.click();
+    })
+    .catch((error) => {
       console.error(error);
-    }
-  }
-  
-  module.exports = {
-    renderArquivo,
-  };
-  
+    });
+};

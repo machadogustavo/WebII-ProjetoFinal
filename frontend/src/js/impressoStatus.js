@@ -1,4 +1,4 @@
-async function ImpressoStatus(arquivoClienteId) {
+export async function ImpressoStatus(arquivoClienteId) {
   try {
     const response = await fetch(
       `http://localhost:3001/form/arquivoStatus/${arquivoClienteId}`,
@@ -14,6 +14,4 @@ async function ImpressoStatus(arquivoClienteId) {
   }
 }
 
-module.exports = {
-  ImpressoStatus,
-};
+export default ImpressoStatus

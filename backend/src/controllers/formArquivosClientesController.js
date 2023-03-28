@@ -46,7 +46,7 @@ class formArquivosClientesController {
         let file = req.files[i];
 
         let nomeArquivoFormatado = path.parse(file.originalname).name;
-        nomeArquivoFormatado.substring(0, 15).replace(/\s+/g, '');;
+        nomeArquivoFormatado.substring(0, 8).replace(/\s+/g, '');;
         let Arquivo = new arquivos({
           nomeArquivo: nomeArquivoFormatado,
           arquivo: file.buffer,
