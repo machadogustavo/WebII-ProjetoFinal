@@ -91,11 +91,12 @@ class formArquivosClientesController {
     } catch (error) {
       // Tratamento de Erro
       return res.status(500).send({
-        message: `${error.message} - Erro ao cadastrar o arquivo e o cliente. ${req}`,
+        message: `${error.message} - Erro ao cadastrar o arquivo e o cliente.`,
       });
     }
   };
 
+  // READ - GET
   static lerArquivoClienteAll = async (req, res) => {
     try {
       const clienteArquivo = await clienteArquivosMD
@@ -170,7 +171,7 @@ class formArquivosClientesController {
   static editarStatusclienteArquivo = async (req, res) => {
     const id = req.params.arquivoClienteId;
     try {
-      const clienteArquivo = await clienteArquivosMD.findById(id);
+      const clienteArquivo = await clienteArquivosMD.findById(id).populate("arquivo");
 
       if (!clienteArquivo) {
         return res.status(404).send({
@@ -187,7 +188,7 @@ class formArquivosClientesController {
       );
 
       return res.status(200).send({
-        message: `Status do arquivo com id [${id}] atualizado com sucesso!`,
+        message: `Status do arquivo: ${clienteArquivo.arquivo.nomeArquivo+clienteArquivo.arquivo.extensaoArquivo} atualizado com sucesso!`,
         data: updatedClienteArquivo,
       });
     } catch (error) {
@@ -198,6 +199,7 @@ class formArquivosClientesController {
     }
   };
 
+  // DELETE
   static deletarArquivoPorId = async (req, res) => {
     try {
       const arquivoId = req.params.arquivoId;

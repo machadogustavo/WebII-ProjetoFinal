@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { deletarArquivoPorId } from "../../js/deleteArquivo";
-import { deletarClientePorId } from "../../js/deletarClientePorId";
-import { ImpressoStatus } from "../../js/impressoStatus";
-import { renderArquivo } from "../../js/renderArquivo.js";
+
+import deletarArquivoPorId from "../../js/delete-requests/deletarArquivoPorId";
+
+import { deletarClientePorId } from "../../js/delete-requests/deletarClientePorId";
+import { ImpressoStatus } from "../../js/put-requests/impressoStatus";
+import { renderArquivo } from "../../js/get-requests/renderArquivo.js";
 
 import { ImageConfig } from "../../config/ImageConfig";
+
+import { getIDCliente } from "../../js/get-requests/getIDCliente";
+import { getArquivosIDCliente } from "../../js/get-requests/getArquivosIDCliente";
 
 const ClienteMain = () => {
   const { idCliente } = useParams();
@@ -17,29 +22,11 @@ const ClienteMain = () => {
   const [isLoading, setIsLoading] = useState([true]);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/clientes/${idCliente}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("CLIENTE ATUAL: ", data);
-        setCliente(data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    getIDCliente(idCliente, setCliente);
 
-    fetch(`http://localhost:3001/form/id/${idCliente}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("ARQUIVOS: ", data);
-        setArquivos(data);
-      })
-      .catch((error) => {
-        alert.error(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+    setIsLoading(true);
+    getArquivosIDCliente(idCliente, setArquivos, setIsLoading);
+  }, [idCliente, setArquivos, setIsLoading]);
 
   if (isLoading) {
     return (
@@ -84,7 +71,7 @@ const ClienteMain = () => {
           <i
             className="fa-solid fa-trash-can"
             onClick={async () => {
-              await deletarClientePorId(cliente._id);
+              await deletarClientePorId(cliente._id, setCliente);
               navigate("/admin");
             }}
           ></i>
@@ -105,7 +92,9 @@ const ClienteMain = () => {
                     {ImageConfig[arquivo.arquivo.tipoArquivo.split("/")[1]] ||
                       ImageConfig["default"]}
                     <p>
-                      {arquivo.arquivo.nomeArquivo+arquivo.arquivo.extensaoArquivo} <br></br>
+                      {arquivo.arquivo.nomeArquivo +
+                        arquivo.arquivo.extensaoArquivo}{" "}
+                      <br></br>
                       {`${(
                         arquivo.arquivo.tamanhoArquivo /
                         (1024 * 1024)
@@ -120,7 +109,10 @@ const ClienteMain = () => {
                   <div>
                     <i
                       className="fa-solid fa-check-to-slot"
-                      onClick={() => ImpressoStatus(arquivo._id)}
+                      onClick={async () => {
+                        await ImpressoStatus(arquivo._id, setArquivos);
+                        getArquivosIDCliente(idCliente, setArquivos, setIsLoading);
+                      }}
                     ></i>
                     <i
                       className="fa-solid fa-print"
@@ -128,7 +120,12 @@ const ClienteMain = () => {
                     ></i>
                     <i
                       className="fa-solid fa-trash-can"
-                      onClick={() => deletarArquivoPorId(arquivo.arquivo._id)}
+                      onClick={async () => {
+                        await deletarArquivoPorId(
+                          arquivo.arquivo._id,
+                          setArquivos
+                        );
+                      }}
                     ></i>
                   </div>
                 </div>

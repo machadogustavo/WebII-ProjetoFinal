@@ -1,7 +1,7 @@
 import express from 'express' // Importando Biblioteca Express
 import dbConnect from './config/dbConnect.js' // Importando módulo conexão
 import routes from './routes/index.js' // Importando index.js
-
+import cors from "cors";
 
 
 // Tratamento de erro conexão BD
@@ -17,6 +17,7 @@ dbConnect.once("open", () => {
 const app = express()
 app.set('view engine','ejs')
 app.use(express.json())
+app.use(cors())
 
 routes(app)
 

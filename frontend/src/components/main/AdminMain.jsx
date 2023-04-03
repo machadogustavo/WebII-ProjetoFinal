@@ -1,63 +1,49 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import axios from "axios";
+import getClientesArquivos from "../../js/get-requests/getClientesArquivos";
 
-import { deletarArquivosCheck } from "../../js/deleteArquivosCheck";
-import { deletarClientePorId } from "../../js/deletarClientePorId";
+import { deletarArquivosCheck } from "../../js/delete-requests/deleteArquivosCheck";
+import { deletarClientePorId } from "../../js/delete-requests/deletarClientePorId";
 
 const AdminMain = () => {
   const [clientes, setClientes] = useState([]);
   const [arquivos, setArquivos] = useState([]);
   const [lastClientes, setLastClientes] = useState([]);
   const [isLoading, setIsLoading] = useState([true]);
+  const [reqError, setReqError] = useState([false]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLoading(true);
-
-    axios
-      .get("http://localhost:3001/clientes")
-      .then((response) => response.data)
-      .then((clientes) => {
-        // Verifica se houve mudanças na lista de clientes
-        if (JSON.stringify(lastClientes) !== JSON.stringify(clientes)) {
-          setClientes(clientes);
-          setLastClientes(clientes);
-          console.log('CLIENTES =>',clientes);
-
-          // Percorre todos os clientes e faz a chamada fetch para cada um
-          for (let i = 0; i < clientes.length; i++) {
-            let idCliente = clientes[i]._id;
-            axios
-              .get(`http://localhost:3001/form/id/${idCliente}`)
-              .then((response) => response.data)
-              .then((data) => {
-                setArquivos(data);
-              })
-              .catch((error) => {
-                alert.error(error);
-              });
-          }
-        }
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setIsLoading(false);
-        setReqError(true);
-      });
+    getClientesArquivos(
+      setClientes,
+      setLastClientes,
+      setArquivos,
+      setIsLoading,
+      setReqError,
+      lastClientes
+    );
   }, [lastClientes]);
 
-  console.log('ARQUIVOS CLIENTES =>>',arquivos);
+  console.log("ARQUIVOS CLIENTES =>>", arquivos);
 
   return (
     <main id="admin">
       <div className="container-flex">
         <button
           className="btn-primary btn-color-blue"
-          onClick={() => deletarArquivosCheck()}
+          onClick={async () => {
+            deletarArquivosCheck();
+            getClientesArquivos(
+              setClientes,
+              setLastClientes,
+              setArquivos,
+              setIsLoading,
+              setReqError,
+              lastClientes
+            );
+          }}
         >
           <p>
             Deletar Todos Arquivos Impressos{" "}
@@ -103,7 +89,7 @@ const AdminMain = () => {
                 <i
                   className="fa-solid fa-trash-can"
                   onClick={async () => {
-                    await deletarClientePorId(cliente._id);
+                    await deletarClientePorId(cliente._id, setClientes);
                     navigate("/admin");
                   }}
                 ></i>
