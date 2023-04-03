@@ -345,7 +345,7 @@ body nav > .btn-secundary > p {
   width: 100%;
   display: grid;
   place-items: center;
-  padding-block-end: 8.5rem;
+  padding-block-end: 10rem;
 }
 #main > div {
   flex-direction: column;
@@ -357,7 +357,8 @@ body nav > .btn-secundary > p {
   display: flex;
   flex-direction: column;
 }
-#main > div > div > h1, #main > div > div > p {
+#main > div > div > h1,
+#main > div > div > p {
   text-align: center;
 }
 #main > div > div > h1 {
@@ -507,6 +508,24 @@ body nav > .btn-secundary > p {
   line-height: 26px;
   text-align: start;
   color: #2B2C34;
+  max-width: 15ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media screen and (min-width: 321px) {
+  #main > div .preview .preview-item__info > p {
+    max-width: 20ch;
+  }
+}
+@media screen and (min-width: 600px) {
+  #main > div .preview .preview-item__info > p {
+    max-width: 43ch;
+  }
+}
+@media screen and (min-width: 1000px) {
+  #main > div .preview .preview-item__info > p {
+    max-width: 48ch;
+  }
 }
 #main > div .preview .preview-item > span {
   cursor: pointer;

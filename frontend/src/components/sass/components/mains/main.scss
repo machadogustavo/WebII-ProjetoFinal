@@ -1,150 +1,194 @@
 #main {
-    width: 100%;
-    display: grid;
-    place-items: center;
-    padding-block-end: 8.5rem;
-    > div {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-        > div {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            > h1, > p {
-                text-align: center
-            }
-            > h1 {
-                @include txt1-3;
-                @include mobile {
-                    @include txt1-2;
-                }
-                @include tablet {
-                    @include txt1;
-                }
-            }
-            > p {
-                @include p-regular;
-                @include tablet {
-                    @include txt2-regular;
-                }
-            }
-        }
-        > form {
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            h2 {
-                @include txt2-medium;
-                @include mobile {
-                    @include txt1-3;
-                }
-                color: $paragraph;
-            }
-            label {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                color: $black;
-                > p {
-                    @include p-medium;
-                    color: $higlight;
-                }
-                input {
-                    @include txt2-regular;
-                    width: 100%;
-                    padding: .5rem 1rem;
-                    border: 2px solid $higlight;
-                    border-radius: 8px;
-                    background-color: transparent;
-                  }
-            }
-            > div:first-of-type {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                gap: 1rem;
-                @include tablet {
-                    flex-direction: row;
-                }
-                > label:last-of-type {
-                    @include tablet {
-                        max-width: 250px;
-                    }
-                }
-            }
-            > div:last-of-type {
-                width: 100%;
-                display: grid;
-                place-items: center;
-                > div {
-                    width: 100%;
-                    margin-block-start: 2rem;
-                    padding-block: 4rem;
-                    display: grid;
-                    place-items: center;
-                    border: 2px dashed $higlight;
-                    > i {
-                        font-size: 4rem;
-                        color: $higlight;
-                    }
-                    > h2 {
-                        margin-block-start: 1rem;
-                        max-width: 170px;
-                        @include p-medium  ;
-                        text-align: center;
-                        color: $headline;
-                    }
-                }
-            }
-        }
-        .preview {
-            width: 100%;
-            max-width: 600px;
-            margin-block-start: 1rem;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid $higlight;
-            border-radius: 6px;
-            place-items: initial;
-            .preview-item {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                border-top: 1px solid $higlight;
-                padding: 1rem;
-                &__info {
-                    display: flex;
-                    align-items: center;
-                    gap: 1rem;
-                    > i {
-                        color: $higlight;
-                    }
-                    > p {
-                        @include p-medium;
-                        text-align: start;
-                        color: $paragraph;
-                    }
-                }
-                > span {
-                    cursor: pointer;
-                    color: $higlight;
-                }
-            }
-            .preview-item:first-of-type {
-                border: none;
-            }
-        }
-        .preview ~ div {
-            justify-content: center;
-            flex-direction: row;
-            padding-block-start: 2rem;
-        }
-    }
-    .dragover {
-        opacity: .2;
-    }
+	width: 100%;
+	display: grid;
+	place-items: center;
+	padding-block-end: 10rem;
+
+	>div {
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+
+		>div {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+
+			>h1,
+			>p {
+				text-align: center
+			}
+
+			>h1 {
+				@include txt1-3;
+
+				@include mobile {
+					@include txt1-2;
+				}
+
+				@include tablet {
+					@include txt1;
+				}
+			}
+
+			>p {
+				@include p-regular;
+
+				@include tablet {
+					@include txt2-regular;
+				}
+			}
+		}
+
+		>form {
+			width: 100%;
+			max-width: 600px;
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+
+			h2 {
+				@include txt2-medium;
+
+				@include mobile {
+					@include txt1-3;
+				}
+
+				color: $paragraph;
+			}
+
+			label {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+				color: $black;
+
+				>p {
+					@include p-medium;
+					color: $higlight;
+				}
+
+				input {
+					@include txt2-regular;
+					width: 100%;
+					padding: .5rem 1rem;
+					border: 2px solid $higlight;
+					border-radius: 8px;
+					background-color: transparent;
+				}
+			}
+
+			>div:first-of-type {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				gap: 1rem;
+
+				@include tablet {
+					flex-direction: row;
+				}
+
+				>label:last-of-type {
+					@include tablet {
+						max-width: 250px;
+					}
+				}
+			}
+
+			>div:last-of-type {
+				width: 100%;
+				display: grid;
+				place-items: center;
+
+				>div {
+					width: 100%;
+					margin-block-start: 2rem;
+					padding-block: 4rem;
+					display: grid;
+					place-items: center;
+					border: 2px dashed $higlight;
+
+					>i {
+						font-size: 4rem;
+						color: $higlight;
+					}
+
+					>h2 {
+						margin-block-start: 1rem;
+						max-width: 170px;
+						@include p-medium;
+						text-align: center;
+						color: $headline;
+					}
+				}
+			}
+		}
+
+		.preview {
+			width: 100%;
+			max-width: 600px;
+			margin-block-start: 1rem;
+			display: flex;
+			flex-direction: column;
+			border: 1px solid $higlight;
+			border-radius: 6px;
+			place-items: initial;
+
+			.preview-item {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				border-top: 1px solid $higlight;
+				padding: 1rem;
+
+				&__info {
+					display: flex;
+					align-items: center;
+					gap: 1rem;
+
+					>i {
+						color: $higlight;
+					}
+
+					>p {
+						@include p-medium;
+						text-align: start;
+						color: $paragraph;
+						max-width: 15ch;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						@include mobile {
+							max-width: 20ch;
+						}
+						@include tablet {
+							max-width: 43ch;
+						}
+						@include desktop {
+							max-width: 48ch;
+						}
+					}
+				}
+
+				>span {
+					cursor: pointer;
+					color: $higlight;
+				}
+			}
+
+			.preview-item:first-of-type {
+				border: none;
+			}
+		}
+
+		.preview~div {
+			justify-content: center;
+			flex-direction: row;
+			padding-block-start: 2rem;
+		}
+	}
+
+	.dragover {
+		opacity: .2;
+	}
 }
