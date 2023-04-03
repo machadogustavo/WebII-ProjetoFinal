@@ -2,6 +2,8 @@ import arquivos from "../models/Arquivo.js";
 import clientes from "../models/Cliente.js";
 import clienteArquivosMD from "../models/clienteArquivo.js";
 import path from "path";
+import { toUnicode } from "punycode";
+
 
 class formArquivosClientesController {
   // CRUD
@@ -45,13 +47,19 @@ class formArquivosClientesController {
       for (let i = 0; i < req.files.length; i++) {
         let file = req.files[i];
 
-        let nomeArquivoFormatado = path.parse(file.originalname).name;
-        nomeArquivoFormatado.substring(0, 8).replace(/\s+/g, '');;
+        
+        let nomeArquivoFormatado = toUnicode(path.parse(file.originalname).name)
+        .substring(0, 20)
+        .replace(/\W+/g, '-')
+        .toLowerCase();
+
+        let extensaoArquivo = path.parse(file.originalname).ext
         let Arquivo = new arquivos({
           nomeArquivo: nomeArquivoFormatado,
           arquivo: file.buffer,
           dataArquivo: Date.now(),
           tipoArquivo: file.mimetype,
+          extensaoArquivo: extensaoArquivo,
           tamanhoArquivo: file.size,
           cliente: ClienteId,
         });
@@ -110,10 +118,10 @@ class formArquivosClientesController {
         .findById(clienteArquivoId)
         .populate("arquivo");
 
-        // res.setHeader('Content-Type', clienteArquivo.arquivo.tipoArquivo);
-        // res.setHeader('Content-Disposition', `attachment; filename=${clienteArquivo.arquivo.nomeArquivo}`);
-        // res.send(clienteArquivo.arquivo);
-        res.status(200).json(clienteArquivo.arquivo);
+      // res.setHeader('Content-Type', clienteArquivo.arquivo.tipoArquivo);
+      // res.setHeader('Content-Disposition', `attachment; filename=${clienteArquivo.arquivo.nomeArquivo}`);
+      // res.send(clienteArquivo.arquivo);
+      res.status(200).json(clienteArquivo.arquivo);
     } catch (error) {
       res.status(400).send({
         message: `${error.message} - Erro ao buscar arquivo associados ao IdCliente`,
@@ -146,7 +154,7 @@ class formArquivosClientesController {
         .find({ "cliente._id": id, arquivo: { $exists: true } })
         .populate("arquivo")
         .exec();
-  
+
       res.status(200).json(arquivos);
     } catch (error) {
       res.status(400).send({
@@ -205,7 +213,7 @@ class formArquivosClientesController {
       }
 
       return res.status(200).send({
-        message: `O arquivo com id [${arquivoId}] e todas as suas associações foram excluídos com sucesso!`,
+        message: `O arquivo com id [${arquivoId}] e todas as suas associações foram excluídas com sucesso!`,
       });
     } catch (error) {
       // Tratamento de Erro
@@ -215,23 +223,23 @@ class formArquivosClientesController {
     }
   };
 
-  static deletarClientePorId = async(req, res) => {
+  static deletarClientePorId = async (req, res) => {
     try {
       const clienteId = req.params.clienteId;
-  
+
       // Busca os registros de clienteArquivos com os arquivos a serem excluídos
       const registros = await clienteArquivosMD.find({ cliente: clienteId });
-  
+
       // Exclui todos os arquivos associados ao cliente
-      const arquivosIds = registros.map(registro => registro.arquivo);
+      const arquivosIds = registros.map((registro) => registro.arquivo);
       await arquivos.deleteMany({ _id: { $in: arquivosIds } });
-  
+
       // Exclui todos os registros de clienteArquivos associados ao cliente
       await clienteArquivosMD.deleteMany({ cliente: clienteId });
-  
+
       // Exclui o cliente do banco de dados
       await clientes.findByIdAndDelete(clienteId);
-  
+
       return res.status(200).send({
         message: `O cliente com o id [${clienteId}] e todas as suas associações foram excluídos com sucesso!`,
       });
@@ -242,7 +250,6 @@ class formArquivosClientesController {
       });
     }
   };
-
 
   static deletarArquivosImpressos = async (req, res) => {
     try {

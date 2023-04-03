@@ -8,6 +8,7 @@ const arquivoSchema = new mongoose.Schema(
         arquivo: {type: Buffer, require: true},
         dataArquivo: {type: Date},
         tipoArquivo: {type: String},
+        extensaoArquivo : {type: String},
         tamanhoArquivo: {type: Number, require: true},
         cliente: {type: mongoose.Schema.Types.ObjectId,ref: 'cliente'},
     },

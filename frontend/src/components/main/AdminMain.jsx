@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 
 import axios from "axios";
 
@@ -12,6 +12,7 @@ const AdminMain = () => {
   const [arquivos, setArquivos] = useState([]);
   const [lastClientes, setLastClientes] = useState([]);
   const [isLoading, setIsLoading] = useState([true]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
@@ -24,7 +25,7 @@ const AdminMain = () => {
         if (JSON.stringify(lastClientes) !== JSON.stringify(clientes)) {
           setClientes(clientes);
           setLastClientes(clientes);
-          console.log(clientes);
+          console.log('CLIENTES =>',clientes);
 
           // Percorre todos os clientes e faz a chamada fetch para cada um
           for (let i = 0; i < clientes.length; i++) {
@@ -49,7 +50,7 @@ const AdminMain = () => {
       });
   }, [lastClientes]);
 
-  console.log(arquivos);
+  console.log('ARQUIVOS CLIENTES =>>',arquivos);
 
   return (
     <main id="admin">
@@ -87,8 +88,8 @@ const AdminMain = () => {
                 <div>
                   <div>
                     <Link to={`/admin/cliente/${cliente._id}`}>
-                      <i class="fa-solid fa-user"></i>
-                      <a href={"#" + cliente._id}>{cliente.nomeCliente}</a>
+                      <i className="fa-solid fa-user"></i>
+                      {cliente.nomeCliente}
                     </Link>
                   </div>
                   <p>{cliente.emailCliente}</p>
@@ -101,7 +102,10 @@ const AdminMain = () => {
                 </div>
                 <i
                   className="fa-solid fa-trash-can"
-                  onClick={() => deletarClientePorId(cliente._id)}
+                  onClick={async () => {
+                    await deletarClientePorId(cliente._id);
+                    navigate("/admin");
+                  }}
                 ></i>
               </div>
             ))}

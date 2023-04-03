@@ -8,7 +8,6 @@ export async function deletarClientePorId(clienteId) {
       );
       const data = await response.json();
       alert(data.message);
-      window.location.reload()
     } catch (error) {
       console.error(error);
     }

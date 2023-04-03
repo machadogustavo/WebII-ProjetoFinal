@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
+import { useParams, useNavigate } from "react-router-dom";
 import { deletarArquivoPorId } from "../../js/deleteArquivo";
 import { deletarClientePorId } from "../../js/deletarClientePorId";
 import { ImpressoStatus } from "../../js/impressoStatus";
@@ -10,7 +9,7 @@ import { ImageConfig } from "../../config/ImageConfig";
 
 const ClienteMain = () => {
   const { idCliente } = useParams();
-  // const history = useHistory
+  const navigate = useNavigate();
   console.log("ID CLIENTE ATUAL: ", idCliente);
 
   const [arquivos, setArquivos] = useState([]);
@@ -48,18 +47,9 @@ const ClienteMain = () => {
         <div className="container-flex">
           <header>
             <div>
-              <i class="fa-solid fa-user"></i>
-              <h2>{cliente.nomeCliente}</h2>
+              <i className="fa-solid fa-user"></i>
+              <h2>Carregando Cliente :)</h2>
             </div>
-            <h3>{cliente.telefoneCliente}</h3>
-            <h3>{cliente.emailCliente}</h3>
-
-            <i
-              className="fa-solid fa-trash-can"
-              onClick={() => {
-                deletarClientePorId(cliente._id);
-              }}
-            ></i>
           </header>
         </div>
 
@@ -67,7 +57,7 @@ const ClienteMain = () => {
           <div>
             <div>
               <div>
-                <p>Carregando arquivos...</p>
+                <p>Carregando arquivos do cliente...</p>
               </div>
             </div>
           </div>
@@ -93,9 +83,9 @@ const ClienteMain = () => {
           </h3>
           <i
             className="fa-solid fa-trash-can"
-            onClick={() => {
-              deletarClientePorId(cliente._id);
-              // history.pushState('/admin');
+            onClick={async () => {
+              await deletarClientePorId(cliente._id);
+              navigate("/admin");
             }}
           ></i>
         </header>
@@ -115,7 +105,7 @@ const ClienteMain = () => {
                     {ImageConfig[arquivo.arquivo.tipoArquivo.split("/")[1]] ||
                       ImageConfig["default"]}
                     <p>
-                      {arquivo.arquivo.nomeArquivo} <br></br>
+                      {arquivo.arquivo.nomeArquivo+arquivo.arquivo.extensaoArquivo} <br></br>
                       {`${(
                         arquivo.arquivo.tamanhoArquivo /
                         (1024 * 1024)
