@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import InputMask from "react-input-mask";
 
@@ -6,7 +6,11 @@ import { ImageConfig } from "../../config/ImageConfig";
 
 import postForm from "../../js/post-requests/postForm";
 
+import Alert from "../Alert/Alert";
+
 const FormMain = () => {
+  // alerts
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
   // files
   const [files, setFiles] = useState([]);
   // items
@@ -67,12 +71,19 @@ const FormMain = () => {
     localStorage.setItem('nomeCliente', nomeCliente);
     localStorage.setItem('emailCliente', emailCliente);
     localStorage.setItem('telefoneCliente', telefoneCliente);
-    postForm(files, nomeCliente, emailCliente, telefoneCliente);
+    postForm(files, nomeCliente, emailCliente, telefoneCliente, setIsAlertVisible);
+    console.log(isAlertVisible)
   }
-
+  // // useEffects Alerts
+  // useEffect(() => {
+  //   if (isAlertVisible === true) {
+      
+  //   }
+  // }, [isAlertVisible])
   // pageview
   return (
     <div className="container-flex">
+      {isAlertVisible ? <Alert /> : null}
       <div>
         <h1>Envie seus arquivos!</h1>
         <p>
@@ -131,7 +142,7 @@ const FormMain = () => {
       {Items.length > 0 ? (
         <div className="preview" name="files">
           {Items}
-          {console.log(files)}
+          {/* {console.log(files)} */}
         </div>
       ) : null}
       {Items.length > 0 ? (
