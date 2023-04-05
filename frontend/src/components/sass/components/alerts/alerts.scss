@@ -58,7 +58,7 @@
 		}
 		&.Alerta {
 			background-color: #FFF9CC;
-			border: 1px solid #7A5D00;
+			border: 1px solid #7A5D00 !important;
 			.alert-header .alert-header__content h2 {
 				color: #7A5D00;
 			}

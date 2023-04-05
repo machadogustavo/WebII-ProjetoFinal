@@ -5,8 +5,6 @@ export async function deletarClientePorId(clienteId, setCliente) {
     const response = await axios.delete(
       `http://localhost:3001/form/deleteCliente/${clienteId}`
     );
-
-    alert(response.data.message);
     setCliente((clientesAntigos) =>
       clientesAntigos.filter((cliente) => cliente._id !== clienteId)
     );
