@@ -12,8 +12,7 @@ async function postForm(files, nomeCliente, emailCliente, telefoneCliente, setIs
   try {
     const response = await axios.post("http://localhost:3001/form", formData);
     console.log(response.data);
-    // alert('Arquivos enviados com sucesso!');
-    return setIsAlertVisible(true);
+    setIsAlertVisible(true);
   } catch (error) {
     console.error(error);
   }

@@ -11,8 +11,14 @@ import { ImageConfig } from "../../config/ImageConfig";
 
 import { getIDCliente } from "../../js/get-requests/getIDCliente";
 import { getArquivosIDCliente } from "../../js/get-requests/getArquivosIDCliente";
+import Alerts from "../Alert/Alerts";
 
 const ClienteMain = () => {
+  // alerts
+  const [alertImpressao, setAlertImpressao] = useState(false);
+  const [alertDel, setAlertDel] = useState(false);
+  const [arquivoIdDel, setArquivoIdDel] = useState(false);
+
   const { idCliente } = useParams();
   const navigate = useNavigate();
   console.log("ID CLIENTE ATUAL: ", idCliente);
@@ -55,6 +61,18 @@ const ClienteMain = () => {
 
   return (
     <main id="cliente">
+      {alertImpressao ? (<Alerts type={'Sucesso'} content={`Status de impressão alterado com sucesso!`} func={setAlertImpressao} time={true} />) : null}
+      {alertDel ? (<Alerts
+        type={'Alerta'}
+        content={`Deseja Excluir o Arquivo de id: ${arquivoIdDel}?`}
+        func={setAlertDel}
+        res={true}
+        anyFunc={async () => {
+          await deletarArquivoPorId(
+            arquivoIdDel,
+            setArquivos
+          );
+        }} />) : null}
       <div className="container-flex">
         <header>
           <div>
@@ -78,7 +96,7 @@ const ClienteMain = () => {
         </header>
         <div className="clienteArquivo">
           {arquivos.filter((item) => item.cliente === cliente._id).length ===
-          0 ? (
+            0 ? (
             <div className="clienteArquivo">
               <p>Este cliente não possui arquivos</p>
             </div>
@@ -109,10 +127,13 @@ const ClienteMain = () => {
                   <div>
                     <i
                       className="fa-solid fa-check-to-slot"
-                      onClick={async () => {
-                        await ImpressoStatus(arquivo._id, setArquivos);
-                        getArquivosIDCliente(idCliente, setArquivos, setIsLoading);
-                      }}
+                      onClick={
+                        async () => {
+                          setAlertImpressao(true);
+                          await ImpressoStatus(arquivo._id, setArquivos);
+                          getArquivosIDCliente(idCliente, setArquivos, setIsLoading);
+                        }
+                      }
                     ></i>
                     <i
                       className="fa-solid fa-print"
@@ -120,12 +141,7 @@ const ClienteMain = () => {
                     ></i>
                     <i
                       className="fa-solid fa-trash-can"
-                      onClick={async () => {
-                        await deletarArquivoPorId(
-                          arquivo.arquivo._id,
-                          setArquivos
-                        );
-                      }}
+                      onClick={() => { setArquivoIdDel(arquivo.arquivo._id), setAlertDel(true) }}
                     ></i>
                   </div>
                 </div>

@@ -94,25 +94,92 @@ a:hover {
   text-decoration: none;
 }
 
-.modal {
-  display: none;
+.alert {
   position: fixed;
+  display: grid;
+  place-items: center;
   z-index: 1;
   left: 0;
-  top: 0;
+  top: 25px;
   width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+  animation: a 0.4s ease;
 }
-.modal .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
+.alert .alert-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  padding: 16px;
+  gap: 16px;
+  row-gap: 24px;
+  border-radius: 8px;
   width: 80%;
 }
-.modal .modal-content .close-button {
+.alert .alert-container .alert-header {
+  display: grid;
+  grid-template-columns: 24px 1fr 24px;
+  gap: 16px;
+  align-items: center;
+}
+.alert .alert-container .alert-header .alert-header__content {
+  display: flex;
+  flex-direction: column;
+}
+.alert .alert-container .alert-header .alert-header__content h2 {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 34px;
+  display: flex;
+  align-items: center;
+}
+.alert .alert-container .alert-header .alert-header__content p {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  display: flex;
+  align-items: center;
+  color: #14171A;
+}
+.alert .alert-container .alert-header > svg {
+  width: 24px;
+  height: 24px;
+}
+.alert .alert-container .alert-header > svg:last-of-type {
+  cursor: pointer;
+}
+.alert .alert-container.Sucesso {
+  background-color: #EFFBCC;
+  border: 1px solid #245302;
+}
+.alert .alert-container.Sucesso .alert-header .alert-header__content h2 {
+  color: #245302;
+}
+.alert .alert-container.Alerta {
+  background-color: #FFF9CC;
+  border: 1px solid #7A5D00;
+}
+.alert .alert-container.Alerta .alert-header .alert-header__content h2 {
+  color: #7A5D00;
+}
+.alert .alert-container .alert-res {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+.alert .alert-container .alert-res button {
+  background-color: transparent;
+  padding: 8px 16px;
+  border: 1px solid #7A5D00;
+  border-radius: 8px;
+  color: #7A5D00;
+  cursor: pointer;
+}
+.alert .alert-container .alert-res button:last-of-type {
+  background-color: #7A5D00;
+  color: #fff;
+}
+.alert .alert-container .close-button {
   background-color: #008CBA;
   color: #fff;
   padding: 8px 16px;
@@ -126,6 +193,14 @@ a:hover {
   display: none !important;
 }
 
+@keyframes a {
+  0% {
+    margin-block-start: -100%;
+  }
+  100% {
+    margin-block-start: 0;
+  }
+}
 header {
   width: 100%;
   display: grid;

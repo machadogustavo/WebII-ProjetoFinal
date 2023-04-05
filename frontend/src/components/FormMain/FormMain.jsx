@@ -6,7 +6,7 @@ import { ImageConfig } from "../../config/ImageConfig";
 
 import postForm from "../../js/post-requests/postForm";
 
-import Alert from "../Alert/Alert";
+import Alerts from "../Alert/Alerts";
 
 const FormMain = () => {
   // alerts
@@ -74,16 +74,9 @@ const FormMain = () => {
     postForm(files, nomeCliente, emailCliente, telefoneCliente, setIsAlertVisible);
     console.log(isAlertVisible)
   }
-  // // useEffects Alerts
-  // useEffect(() => {
-  //   if (isAlertVisible === true) {
-      
-  //   }
-  // }, [isAlertVisible])
-  // pageview
   return (
     <div className="container-flex">
-      {isAlertVisible ? <Alert /> : null}
+      {isAlertVisible ? <Alerts type={'Sucesso'} content={'Arquivo enviado com Sucesso!'} reaload={true} /> : null}
       <div>
         <h1>Envie seus arquivos!</h1>
         <p>
