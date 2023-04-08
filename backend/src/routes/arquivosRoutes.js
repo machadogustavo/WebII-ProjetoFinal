@@ -9,6 +9,7 @@ import cors from "cors";
 
 router.use(cors())
     .get("/arquivos",arquivosController.lerArquivos)
+    .get("/arquivos/buffearquivo/:id",arquivosController.lerBufferArquivoId)
     .get("/arquivos/nome/:nomeArquivo",arquivosController.lerArquivoNome)
     .get("/arquivos/:id",arquivosController.lerArquivoId)
     .post("/arquivos",multerUpload.single('arquivo'),arquivosController.criarArquivo)

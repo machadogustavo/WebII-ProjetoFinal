@@ -73,10 +73,11 @@ const FormMain = () => {
     localStorage.setItem('telefoneCliente', telefoneCliente);
     postForm(files, nomeCliente, emailCliente, telefoneCliente, setIsAlertVisible);
     console.log(isAlertVisible)
-  }
+    setFiles([])
+  } 
   return (
     <div className="container-flex">
-      {isAlertVisible ? <Alerts type={'Sucesso'} content={'Arquivo enviado com Sucesso!'} reaload={true} /> : null}
+      {isAlertVisible ? <Alerts type={'Sucesso'} content={'Arquivo(s) enviado com Sucesso!'} reaload={true} /> : null}
       <div>
         <h1>Envie seus arquivos!</h1>
         <p>

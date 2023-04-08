@@ -106,7 +106,7 @@ const AdminMain = () => {
                 </div>
                 <i
                   className="fa-solid fa-trash-can"
-                  onClick={() => (setAlertDelCliente(true), setClienteDel(cliente.nomeCliente))}
+                  onClick={() => (setAlertDelCliente(true), setClienteDel(cliente._id))}
                 ></i>
               </div>
             ))}
