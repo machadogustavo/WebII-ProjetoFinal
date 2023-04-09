@@ -106,9 +106,7 @@ const ClienteMain = () => {
         <div className="clienteArquivo">
           {arquivos.filter((item) => item.cliente === cliente._id).length ===
           0 ? (
-            <div className="clienteArquivo">
-              <p>Este cliente não possui arquivos</p>
-            </div>
+            <p>Este cliente não possui arquivos</p>
           ) : (
             arquivos
               .filter((arquivo) => arquivo.cliente === cliente._id)
@@ -129,7 +127,7 @@ const ClienteMain = () => {
                       {"Data Envio: " +
                         new Date(arquivo.arquivo.dataArquivo).toLocaleString()}
                       <br></br>
-                      {arquivo.impressoStatus ? "Impresso" : "Não Impresso"}
+                      <span className={`print-stats ${arquivo.impressoStatus == "Impresso" ? "print-stats__true" : "print-stats__false"}`}>{arquivo.impressoStatus ? "Impresso" : "Não Impresso"}</span>
                     </p>
                   </div>
                   <div>

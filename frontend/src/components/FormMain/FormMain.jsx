@@ -72,7 +72,6 @@ const FormMain = () => {
     localStorage.setItem('emailCliente', emailCliente);
     localStorage.setItem('telefoneCliente', telefoneCliente);
     postForm(files, nomeCliente, emailCliente, telefoneCliente, setIsAlertVisible);
-    console.log(isAlertVisible)
     setFiles([])
   } 
   return (

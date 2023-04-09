@@ -74,6 +74,23 @@
 					@include tablet {
 						gap: 1rem;
 					}
+					.print-stats {
+						font-weight: 400;
+						font-size: 12px;
+						line-height: 20px;
+						padding-inline: 27px;
+						border: 1px solid v.$higlight;
+						border-radius: 8px;
+						&__false {
+							background-color: transparent;
+							color: v.$higlight;
+						}
+						&__true {
+							background-color: v.$higlight;
+							color: v.$white;
+						}
+					}
+					
 				}
 				> div:last-of-type {
 					display: flex;
